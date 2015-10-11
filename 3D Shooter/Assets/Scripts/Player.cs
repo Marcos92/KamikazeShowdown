@@ -55,15 +55,17 @@ public class Player : LivingEntity {
         }
 
         //Dodge
-        if (!dodging && Input.GetMouseButtonDown(1))
+        if (!dodging && Input.GetMouseButtonDown(1) && moveVelocity != Vector3.zero)
         {
             dodging = true;
+            nextDodgeTime = Time.time + msBetweenDodges / 1000f;
         }
-
-        if(Time.time > nextDodgeTime)
+        else if (dodging && Time.time > nextDodgeTime)
         {
             dodging = false;
-            nextDodgeTime = Time.time + msBetweenDodges/1000f;
         }
+
+        if (dodging) skinMaterial.color = Color.green;
+        else skinMaterial.color = originalColor;
     }
 }

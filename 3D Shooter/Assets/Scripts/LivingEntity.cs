@@ -7,8 +7,8 @@ public class LivingEntity : MonoBehaviour, IDamageable {
     protected float health;
     protected bool dead;
 
-    Material skinMaterial;
-    Color originalColor;
+    public Material skinMaterial;
+    public Color originalColor;
 
     public event System.Action onDeath;
 
