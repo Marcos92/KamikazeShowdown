@@ -1,0 +1,46 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{7072BFA7-195F-F34F-4A17-AA88F6EE4413}") = "3D Shooter v1", "Assembly-CSharp.csproj", "{38A21B50-C99A-B74E-84D0-7222A0319E13}"
+EndProject
+Project("{7072BFA7-195F-F34F-4A17-AA88F6EE4413}") = "3D Shooter v1", "Assembly-CSharp-Editor.csproj", "{782BDC2D-03EA-F6AE-0F8B-9FC6E324D7BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38A21B50-C99A-B74E-84D0-7222A0319E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38A21B50-C99A-B74E-84D0-7222A0319E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38A21B50-C99A-B74E-84D0-7222A0319E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38A21B50-C99A-B74E-84D0-7222A0319E13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{782BDC2D-03EA-F6AE-0F8B-9FC6E324D7BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{782BDC2D-03EA-F6AE-0F8B-9FC6E324D7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{782BDC2D-03EA-F6AE-0F8B-9FC6E324D7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{782BDC2D-03EA-F6AE-0F8B-9FC6E324D7BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+																											GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.IndentWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal
