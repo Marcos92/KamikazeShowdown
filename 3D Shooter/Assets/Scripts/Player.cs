@@ -68,4 +68,13 @@ public class Player : LivingEntity {
         if (dodging) skinMaterial.color = Color.green;
         else skinMaterial.color = originalColor;
     }
+
+    void OnTriggerEnter(Collider c)
+    {
+        if (c.gameObject.tag == "PickUp")
+        {
+            gunController.EquipGun(c.gameObject.GetComponent<PickUp>().gun);
+            Destroy(c.gameObject);
+        }
+    }
 }
