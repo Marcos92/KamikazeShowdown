@@ -9,7 +9,7 @@ public class Player : LivingEntity {
 
     Camera viewCamera;
     PlayerController controller;
-    GunController gunController;
+    public GunController gunController;
 
     float nextDodgeTime;
     public int msBetweenDodges = 500;
@@ -65,8 +65,12 @@ public class Player : LivingEntity {
             dodging = false;
         }
 
-        if (dodging) skinMaterial.color = Color.green;
-        else skinMaterial.color = originalColor;
+        //if (dodging) skinMaterial.color = Color.green;
+        //else skinMaterial.color = originalColor;
+
+        //Ammo
+        if (!gunController.equippedGun.infinite && gunController.equippedGun.ammo <= 0)
+            gunController.EquipGun(gunController.startingGun);
     }
 
     void OnTriggerEnter(Collider c)

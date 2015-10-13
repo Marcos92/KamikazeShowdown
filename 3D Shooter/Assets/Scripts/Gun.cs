@@ -7,10 +7,9 @@ public class Gun : MonoBehaviour {
     public Projectile projectile;
     public float msBetweenShots = 100;
     public int muzzleVelocity = 35;
-	public bool spread;
-	public bool flame;
-    public bool shotgun;
-    public bool machinegun;
+    public bool spread, flame, shotgun, machinegun, infinite;
+
+    public int ammo;
 
     float nextShootTime;
 
@@ -111,6 +110,7 @@ public class Gun : MonoBehaviour {
         if (Time.time > nextShootTime)
         {
             nextShootTime = Time.time + msBetweenShots / 1000;
+            ammo--;
 
             if (laser)
             {
