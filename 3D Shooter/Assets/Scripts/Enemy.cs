@@ -14,9 +14,6 @@ public class Enemy : LivingEntity {
     Transform target;
     LivingEntity targetEntity;
 
-    Material skinMaterial;
-    Color originalColor;
-
     float attackDistThreshold = .5f;
     float timeBetweenAttacks = 1;
     float damage = 1;
