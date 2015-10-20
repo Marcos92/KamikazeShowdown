@@ -23,7 +23,7 @@ public class PUManager : MonoBehaviour {
             nextSpawn = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay + 1);
 
             float randomX = Random.Range(room.transform.position.x - room.GetComponent<Renderer>().bounds.size.x / 2.5f, room.transform.position.x + room.GetComponent<Renderer>().bounds.size.x / 2.5f);
-            float randomZ = Random.Range(room.transform.position.z - room.GetComponent<Renderer>().bounds.size.x / 2.5f, room.transform.position.z + room.GetComponent<Renderer>().bounds.size.x / 2.5f);
+            float randomZ = Random.Range(room.transform.position.z - room.GetComponent<Renderer>().bounds.size.z / 2.5f, room.transform.position.z + room.GetComponent<Renderer>().bounds.size.z / 2.5f);
 
             PickUp newPU = Instantiate(pickUpList[Random.Range(0, pickUpList.Length)], new Vector3(randomX, 0, randomZ), Quaternion.identity) as PickUp;
         }

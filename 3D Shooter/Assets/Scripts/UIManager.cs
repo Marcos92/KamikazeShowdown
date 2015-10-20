@@ -15,7 +15,8 @@ public class UIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        combo.GetComponent<Text>().text = player.GetComponent<Player>().combo.ToString() + "x";
+        if (player.GetComponent<Player>().combo > 1) combo.GetComponent<Text>().text = player.GetComponent<Player>().combo.ToString() + "x";
+        else combo.GetComponent<Text>().text = "";
 
         score.GetComponent<Text>().text = player.GetComponent<Player>().score.ToString() + " POINTS";
 
