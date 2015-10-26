@@ -20,3 +20,29 @@ C:\Users\Marcos\Dropbox\Projecto Aplicado\Projecto\3D Shooter v1\Temp\bin\Debug\
 C:\Users\Marcos\Dropbox\Projecto Aplicado\Projecto\3D Shooter v1\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 C:\Users\Marcos\Dropbox\Projecto Aplicado\Projecto\3D Shooter v1\obj\Debug\Assembly-CSharp.dll
 C:\Users\Marcos\Dropbox\Projecto Aplicado\Projecto\3D Shooter v1\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\Assembly-CSharp.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\Mono.Cecil.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEditor.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEditor.iOS.Extensions.Xcode.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.Networking.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.UI.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\Unity.SerializationLogic.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\Unity.DataContract.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\Unity.UNetWeaver.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\Unity.CecilTools.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.xml
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEditor.xml
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.UI.xml
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.Networking.xml
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\obj\Debug\Assembly-CSharp.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.Advertisements.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.Analytics.dll
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.Advertisements.xml
+C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.Analytics.xml

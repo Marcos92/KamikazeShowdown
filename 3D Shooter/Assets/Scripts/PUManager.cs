@@ -7,7 +7,7 @@ public class PUManager : MonoBehaviour {
     public GameObject[] pickUpList;
     float nextSpawn;
     public float maxSpawnDelay, minSpawnDelay;
-    public GameObject room;
+    GameObject room;
 
 	// Use this for initialization
 	void Start ()
@@ -27,5 +27,7 @@ public class PUManager : MonoBehaviour {
 
             PickUp newPU = Instantiate(pickUpList[Random.Range(0, pickUpList.Length)], new Vector3(randomX, 0, randomZ), Quaternion.identity) as PickUp;
         }
+
+        if (gameObject.GetComponent<LevelGenerator>().currentRoom != null) room = gameObject.GetComponent<LevelGenerator>().currentRoom.transform.FindChild("Plane").gameObject;
 	}
 }
