@@ -18,6 +18,8 @@ public class PUManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //METER A FAZER SPAWN NA NAV MESH
+
 	    if(Time.time > nextSpawn)
         {
             nextSpawn = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay + 1);
@@ -28,6 +30,6 @@ public class PUManager : MonoBehaviour {
             PickUp newPU = Instantiate(pickUpList[Random.Range(0, pickUpList.Length)], new Vector3(randomX, 0, randomZ), Quaternion.identity) as PickUp;
         }
 
-        if (gameObject.GetComponent<LevelGenerator>().currentRoom != null) room = gameObject.GetComponent<LevelGenerator>().currentRoom.transform.FindChild("Plane").gameObject;
+        if (gameObject.GetComponent<LevelGenerator>().currentRoom != null) room = gameObject.GetComponent<LevelGenerator>().currentRoom.transform.FindChild("Room").gameObject;
 	}
 }

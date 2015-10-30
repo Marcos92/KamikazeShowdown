@@ -4,10 +4,10 @@ using UnityEditor;
 
 public class LevelGenerator : MonoBehaviour {
 
-    public GameObject[] rooms;
-    GameObject[,] map;
+    public Room[] rooms;
+    Room[,] map;
     [HideInInspector]
-    public GameObject currentRoom;
+    public Room currentRoom;
     bool newMap, newRoom;
     int nRooms;
 
@@ -16,7 +16,7 @@ public class LevelGenerator : MonoBehaviour {
     {
         newMap = true;
         newRoom = true;
-        map = new GameObject[10, 10];
+        map = new Room[10, 10];
 	}
 	
 	// Update is called once per frame
@@ -79,19 +79,14 @@ public class LevelGenerator : MonoBehaviour {
                 {
                     if (map[i, j] != null)
                     {
-                        GameObject r = Instantiate(map[i, j], new Vector3(i * map[i, j].transform.FindChild("Plane").GetComponent<Renderer>().bounds.size.x, -1, j * map[i, j].transform.FindChild("Plane").GetComponent<Renderer>().bounds.size.z), Quaternion.identity) as GameObject;
+                        Room r = Instantiate(map[i, j], new Vector3(i * map[i, j].transform.FindChild("Room").GetComponent<Renderer>().bounds.size.x, -1, j * map[i, j].transform.FindChild("Room").GetComponent<Renderer>().bounds.size.z), Quaternion.identity) as Room;
                     }
                 }
             }
 
-            newMap = false; //Evita a criação de mapas a cada update
+            NavMeshBuilder.BuildNavMesh();
 
-            if (newRoom)
-            {
-                //Mudar currentRoom
-                NavMeshBuilder.BuildNavMesh();
-                newRoom = false;
-            }
+            newMap = false; //Evita a criação de mapas a cada update
         }
 	}
 }
