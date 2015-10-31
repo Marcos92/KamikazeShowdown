@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour {
     int enemiesRemainingAlive;
     float nextSpawnTime;
 
-    public bool allEnemiesDefeated;
+    public bool allEnemiesDefeated = false;
 
     void Start()
     {
@@ -30,8 +30,6 @@ public class Spawner : MonoBehaviour {
             Enemy spawnedEnemy = Instantiate(enemy, transform.position, Quaternion.identity) as Enemy;
             spawnedEnemy.onDeath += OnEnemyDeath;
         }
-
-        if (currentWaveNumber > waves.Length) allEnemiesDefeated = true;
     }
 
     void OnEnemyDeath()
@@ -51,6 +49,7 @@ public class Spawner : MonoBehaviour {
             enemiesRemainingToSpawn = currentWave.enemyCount;
             enemiesRemainingAlive = enemiesRemainingToSpawn;
         }
+        else allEnemiesDefeated = true;
     }
 
     [System.Serializable]

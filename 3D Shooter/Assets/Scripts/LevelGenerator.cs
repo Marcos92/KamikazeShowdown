@@ -9,7 +9,7 @@ public class LevelGenerator : MonoBehaviour {
     [HideInInspector]
     public Room currentRoom;
     bool newMap, newRoom;
-    int nRooms;
+    public int nRooms; //Número de salas 
 
 	// Use this for initialization
 	void Start () 
@@ -27,7 +27,6 @@ public class LevelGenerator : MonoBehaviour {
             int x = 0, y = 0;
             map[x, y] = rooms[0]; //Primeira sala
             currentRoom = rooms[0]; //Atribui o nível actual
-            nRooms = 10; //Número de salas no nível
 
             //Gera a disposição e tipo de salas
             for (int i = 0; i < nRooms; i++)
@@ -79,7 +78,7 @@ public class LevelGenerator : MonoBehaviour {
                 {
                     if (map[i, j] != null)
                     {
-                        Room r = Instantiate(map[i, j], new Vector3(i * map[i, j].transform.FindChild("Room").GetComponent<Renderer>().bounds.size.x, -1, j * map[i, j].transform.FindChild("Room").GetComponent<Renderer>().bounds.size.z), Quaternion.identity) as Room;
+                        Room r = Instantiate(map[i, j], new Vector3(i * map[i, j].room.GetComponent<Renderer>().bounds.size.x, -1, j * map[i, j].room.GetComponent<Renderer>().bounds.size.z), Quaternion.identity) as Room;
                     }
                 }
             }

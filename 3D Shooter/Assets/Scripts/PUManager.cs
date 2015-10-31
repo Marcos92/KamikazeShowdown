@@ -30,6 +30,6 @@ public class PUManager : MonoBehaviour {
             PickUp newPU = Instantiate(pickUpList[Random.Range(0, pickUpList.Length)], new Vector3(randomX, 0, randomZ), Quaternion.identity) as PickUp;
         }
 
-        if (gameObject.GetComponent<LevelGenerator>().currentRoom != null) room = gameObject.GetComponent<LevelGenerator>().currentRoom.transform.FindChild("Room").gameObject;
+        if (gameObject.GetComponent<LevelGenerator>().currentRoom != null) room = gameObject.GetComponent<LevelGenerator>().currentRoom.room;
 	}
 }
