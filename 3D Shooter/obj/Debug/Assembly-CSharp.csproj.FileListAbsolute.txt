@@ -42,7 +42,3 @@ C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\
 C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\obj\Debug\Assembly-CSharp.dll
 C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\obj\Debug\Assembly-CSharp.pdb
-C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.Advertisements.dll
-C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.Analytics.dll
-C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.Advertisements.xml
-C:\Users\Marcos Rodrigues\Documents\GitHub\KamikazeShowdown\3D Shooter\Temp\bin\Debug\UnityEngine.Analytics.xml
