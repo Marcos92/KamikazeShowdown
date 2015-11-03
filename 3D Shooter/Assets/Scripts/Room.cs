@@ -19,25 +19,25 @@ public class Room : MonoBehaviour
     {
         if (topSpawner != null)
         {
-            spawners[0] = Instantiate(topSpawner, room.transform.position + new Vector3(0, 0, room.GetComponent<Renderer>().bounds.size.z / 2 - 5), Quaternion.identity) as Spawner;
+            spawners[0] = Instantiate(topSpawner, room.transform.position + new Vector3(0, 0, room.GetComponent<Renderer>().bounds.size.z / 2 - 2), Quaternion.identity) as Spawner;
             spawners[0].gameObject.SetActive(false);
         }
 
         if (bottomSpawner != null)
         {
-            spawners[1] = Instantiate(bottomSpawner, room.transform.position + new Vector3(0, 0, -room.GetComponent<Renderer>().bounds.size.z / 2 + 5), Quaternion.identity) as Spawner;
+            spawners[1] = Instantiate(bottomSpawner, room.transform.position + new Vector3(0, 0, -room.GetComponent<Renderer>().bounds.size.z / 2 + 2), Quaternion.identity) as Spawner;
             spawners[1].gameObject.SetActive(false);
         }
 
         if (leftSpawner != null)
         {
-            spawners[2] = Instantiate(leftSpawner, room.transform.position + new Vector3(-room.GetComponent<Renderer>().bounds.size.z / 2 + 5, 0, 0), Quaternion.identity) as Spawner;
+            spawners[2] = Instantiate(leftSpawner, room.transform.position + new Vector3(-room.GetComponent<Renderer>().bounds.size.z / 2 + 2, 0, 0), Quaternion.identity) as Spawner;
             spawners[2].gameObject.SetActive(false);
         }
 
         if (rightSpawner != null)
         {
-            spawners[3] = Instantiate(rightSpawner, room.transform.position + new Vector3(room.GetComponent<Renderer>().bounds.size.z / 2 - 5, 0, 0), Quaternion.identity) as Spawner;
+            spawners[3] = Instantiate(rightSpawner, room.transform.position + new Vector3(room.GetComponent<Renderer>().bounds.size.z / 2 - 2, 0, 0), Quaternion.identity) as Spawner;
             spawners[3].gameObject.SetActive(false);
         }
 
@@ -69,9 +69,13 @@ public class Room : MonoBehaviour
 
     public void OpenDoor(int d)
     {
-        while(doors[d].transform.position.y < 10)
-        {
-            doors[d].transform.position = doors[d].transform.position + Vector3.up * 0.0005f * Time.deltaTime; 
-        }
+        if (doors[d].transform.position.y < 8) 
+            doors[d].transform.position += Vector3.up * 2.5f * Time.deltaTime;
+    }
+
+    public void CloseDoor(int d)
+    {
+        if (doors[d].transform.position.y > 4)
+            doors[d].transform.position -= Vector3.up * 2.5f * Time.deltaTime;
     }
 }
