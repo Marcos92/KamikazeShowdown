@@ -88,47 +88,69 @@ public class LevelGenerator : MonoBehaviour {
                 }
             }
 
-            currentRoom = map[0, 0]; //Atribui o nível actual
+            currentRoom = map[0, 0]; //Atribui a sala actual
 
             NavMeshBuilder.BuildNavMesh();
 
-            newRoom = true;
             newMap = false; //Evita a criação de mapas a cada update
+            newRoom = true;
         }
 
+        //Actualizar a posição da camera conforme a sala
+        if (camera.transform.position.x < currentRoom.transform.position.x) camera.transform.position += Vector3.right * 20f * Time.deltaTime;
+        if (camera.transform.position.x > currentRoom.transform.position.x) camera.transform.position -= Vector3.right * 20f * Time.deltaTime;
+        if (camera.transform.position.z < currentRoom.transform.position.z) camera.transform.position += Vector3.forward * 20f * Time.deltaTime;
+        if (camera.transform.position.z > currentRoom.transform.position.z) camera.transform.position -= Vector3.forward * 20f * Time.deltaTime;
+
         //Verificar se sala já foi derrotada e abrir portas
-        if(currentRoom.clear)
+        if (currentRoom.clear)
         {
             //Abre porta da esquerda
-            if ((int)GetCurrentRoomCoordinates().x - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y] != null)
+            if ((int)GetCurrentRoomCoordinates().x - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y] != null && !map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].clear)
             {
                 map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].OpenDoor(1);
                 currentRoom.OpenDoor(0);
             }
 
             //Abre porta da direita
-            if ((int)GetCurrentRoomCoordinates().x + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y] != null)
+            if ((int)GetCurrentRoomCoordinates().x + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y] != null && !map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].clear)
             {
                 map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].OpenDoor(0);
                 currentRoom.OpenDoor(1);
             }
 
             //Abre porta de cima
-            if ((int)GetCurrentRoomCoordinates().y + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1] != null)
+            if ((int)GetCurrentRoomCoordinates().y + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1] != null && !map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].clear)
             {
                 map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].OpenDoor(3);
                 currentRoom.OpenDoor(2);
             }
 
             //Abre porta de baixo
-            if ((int)GetCurrentRoomCoordinates().y - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1] != null)
+            if ((int)GetCurrentRoomCoordinates().y - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1] != null && !map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].clear)
             {
                 map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].OpenDoor(2);
                 currentRoom.OpenDoor(3);
             }
         }
-        else if(newRoom && !currentRoom.clear)
+        else if (newRoom)
         {
+            //Fecha porta da direita da sala anterior
+            if ((int)GetCurrentRoomCoordinates().x - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y] != null && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].clear)
+                map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].CloseDoor(1);
+
+            //Fecha porta da esquerda da sala anterior
+            if ((int)GetCurrentRoomCoordinates().x + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y] != null && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].clear)
+                map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].CloseDoor(0);
+
+            //Fecha porta de baixo da sala anterior
+            if ((int)GetCurrentRoomCoordinates().y + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1] != null && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].clear)
+                map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].CloseDoor(3);
+
+            //Fecha porta de cima da sala anterior
+            if ((int)GetCurrentRoomCoordinates().y - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1] != null && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].clear)
+                map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].CloseDoor(2);
+
             //Fecha todas as portas
             currentRoom.CloseDoor(0);
             currentRoom.CloseDoor(1);
@@ -139,48 +161,26 @@ public class LevelGenerator : MonoBehaviour {
             currentRoom.spawners[0].gameObject.SetActive(true);
             currentRoom.spawners[1].gameObject.SetActive(true);
             currentRoom.spawners[2].gameObject.SetActive(true);
-            currentRoom.spawners[3].gameObject.SetActive(true); 
+            currentRoom.spawners[3].gameObject.SetActive(true);
 
-            //Fecha porta da direita da sala anterior
-            if ((int)GetCurrentRoomCoordinates().x - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y] != null)
-                map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].CloseDoor(1);
-
-            //Fecha porta da esquerda da sala anterior
-            if ((int)GetCurrentRoomCoordinates().x + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y] != null)
-                map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].CloseDoor(0);
-
-            //Fecha porta de baixo da sala anterior
-            if ((int)GetCurrentRoomCoordinates().y + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1] != null)
-                map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].CloseDoor(3);
-
-            //Fecha porta de cima da sala anterior
-            if ((int)GetCurrentRoomCoordinates().y - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1] != null)
-                map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].CloseDoor(2);
-
-            newRoom = false;
+            if(currentRoom.AllDoorsClosed()) newRoom = false;
         }
 
-        //Actualizar a posição da camera conforme a sala
-        if (camera.transform.position.x < currentRoom.transform.position.x) camera.transform.position += Vector3.right * 20f * Time.deltaTime;
-        if (camera.transform.position.x > currentRoom.transform.position.x) camera.transform.position -= Vector3.right * 20f * Time.deltaTime;
-        if (camera.transform.position.z < currentRoom.transform.position.z) camera.transform.position += Vector3.forward * 20f * Time.deltaTime;
-        if (camera.transform.position.z > currentRoom.transform.position.z) camera.transform.position -= Vector3.forward * 20f * Time.deltaTime;
-
         //Verificar em que sala está o jogador
-        if(currentRoom.clear)
+        for (int i = 0; i < 10; i++)
         {
-            for (int i = 0; i < 10; i++)
+            for (int j = 0; j < 10; j++)
             {
-                for (int j = 0; j < 10; j++)
+                if (map[i, j] != null
+                    && player.transform.position.x < map[i, j].transform.position.x + map[i, j].room.GetComponent<Renderer>().bounds.size.x / 2
+                    && player.transform.position.x > map[i, j].transform.position.x - map[i, j].room.GetComponent<Renderer>().bounds.size.x / 2
+                    && player.transform.position.z < map[i, j].transform.position.z + map[i, j].room.GetComponent<Renderer>().bounds.size.z / 2
+                    && player.transform.position.z > map[i, j].transform.position.z - map[i, j].room.GetComponent<Renderer>().bounds.size.z / 2)
                 {
-                    if (map[i, j] != null
-                        && player.transform.position.x < map[i, j].transform.position.x + map[i, j].room.GetComponent<Renderer>().bounds.size.x / 2
-                        && player.transform.position.x > map[i, j].transform.position.x - map[i, j].room.GetComponent<Renderer>().bounds.size.x / 2
-                        && player.transform.position.z < map[i, j].transform.position.z + map[i, j].room.GetComponent<Renderer>().bounds.size.z / 2
-                        && player.transform.position.z > map[i, j].transform.position.z - map[i, j].room.GetComponent<Renderer>().bounds.size.z / 2)
+                    if (currentRoom != map[i, j])
                     {
-                        currentRoom = map[i, j];
                         newRoom = true;
+                        currentRoom = map[i, j];
                     }
                 }
             }

@@ -60,11 +60,6 @@ public class Room : MonoBehaviour
         {
             clear = true;
         }
-
-        if (clear)
-        {
-            Debug.Log("YOU WIN"); //TEMP
-        }
 	}
 
     public void OpenDoor(int d)
@@ -77,5 +72,17 @@ public class Room : MonoBehaviour
     {
         if (doors[d].transform.position.y > 4)
             doors[d].transform.position -= Vector3.up * 2.5f * Time.deltaTime;
+    }
+
+    public bool AllDoorsClosed()
+    {
+        if (doors[0].transform.position.y <= 4
+            && doors[1].transform.position.y <= 4
+            && doors[2].transform.position.y <= 4
+            && doors[3].transform.position.y <= 4)
+        {
+            return true;
+        }
+        else return false;
     }
 }
