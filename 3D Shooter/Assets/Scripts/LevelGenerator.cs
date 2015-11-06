@@ -20,7 +20,7 @@ public class LevelGenerator : MonoBehaviour {
         newMap = true;
         map = new Room[10, 10];
 
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
         camera = GameObject.Find("Main Camera");
 	}
 	
