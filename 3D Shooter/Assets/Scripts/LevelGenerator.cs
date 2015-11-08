@@ -12,7 +12,7 @@ public class LevelGenerator : MonoBehaviour {
     bool newMap, newRoom;
     public int nRooms; //Número de salas 
 
-    private GameObject player, camera;
+    private GameObject player, cam;
 
 	// Use this for initialization
 	void Start () 
@@ -21,7 +21,7 @@ public class LevelGenerator : MonoBehaviour {
         map = new Room[10, 10];
 
         player = GameObject.FindGameObjectsWithTag("Player")[0];
-        camera = GameObject.Find("Main Camera");
+        cam = GameObject.Find("Main Camera");
 	}
 	
 	// Update is called once per frame
@@ -97,10 +97,10 @@ public class LevelGenerator : MonoBehaviour {
         }
 
         //Actualizar a posição da camera conforme a sala
-        if (camera.transform.position.x < currentRoom.transform.position.x) camera.transform.position += Vector3.right * 20f * Time.deltaTime;
-        if (camera.transform.position.x > currentRoom.transform.position.x) camera.transform.position -= Vector3.right * 20f * Time.deltaTime;
-        if (camera.transform.position.z < currentRoom.transform.position.z) camera.transform.position += Vector3.forward * 20f * Time.deltaTime;
-        if (camera.transform.position.z > currentRoom.transform.position.z) camera.transform.position -= Vector3.forward * 20f * Time.deltaTime;
+        if (cam.transform.position.x < currentRoom.transform.position.x) cam.transform.position += Vector3.right * 20f * Time.deltaTime;
+        if (cam.transform.position.x > currentRoom.transform.position.x) cam.transform.position -= Vector3.right * 20f * Time.deltaTime;
+        if (cam.transform.position.z < currentRoom.transform.position.z) cam.transform.position += Vector3.forward * 20f * Time.deltaTime;
+        if (cam.transform.position.z > currentRoom.transform.position.z) cam.transform.position -= Vector3.forward * 20f * Time.deltaTime;
 
         //Verificar se sala já foi derrotada e abrir portas
         if (currentRoom.clear)
@@ -157,13 +157,15 @@ public class LevelGenerator : MonoBehaviour {
             currentRoom.CloseDoor(2);
             currentRoom.CloseDoor(3);
 
-            //Activa todos os spawners
-            currentRoom.spawners[0].gameObject.SetActive(true);
-            currentRoom.spawners[1].gameObject.SetActive(true);
-            currentRoom.spawners[2].gameObject.SetActive(true);
-            currentRoom.spawners[3].gameObject.SetActive(true);
-
-            if(currentRoom.AllDoorsClosed()) newRoom = false;
+            if (currentRoom.AllDoorsClosed())
+            {
+                //Activa todos os spawners
+                if (currentRoom.spawners[0] != null) currentRoom.spawners[0].gameObject.SetActive(true);
+                if (currentRoom.spawners[1] != null) currentRoom.spawners[1].gameObject.SetActive(true);
+                if (currentRoom.spawners[2] != null) currentRoom.spawners[2].gameObject.SetActive(true);
+                if (currentRoom.spawners[3] != null) currentRoom.spawners[3].gameObject.SetActive(true);
+                newRoom = false;
+            }
         }
 
         //Verificar em que sala está o jogador
