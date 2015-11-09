@@ -6,19 +6,20 @@ public class Saw : MonoBehaviour {
     public float speed;
     public float bounds;
     public float damage;
+    public bool vertical;
     int direction;
 
 	// Use this for initialization
 	void Start ()
     {
-        direction = -1;
+        direction = Random.Range(-1,1);
+        if (direction == 0) direction = 1;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        transform.position += new Vector3(speed, 0, 0) * direction;
-
+        transform.localPosition += new Vector3(speed, 0, 0) * direction;
         if (transform.localPosition.x <= -bounds || transform.localPosition.x >= bounds) direction *= -1;
 	}
 
