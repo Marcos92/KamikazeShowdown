@@ -13,6 +13,7 @@ public class Spawner : MonoBehaviour {
     int enemiesRemainingAlive;
     float nextSpawnTime;
 
+    [HideInInspector]
     public bool allEnemiesDefeated = false;
 
     void Start()

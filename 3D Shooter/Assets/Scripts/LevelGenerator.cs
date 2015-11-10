@@ -101,8 +101,8 @@ public class LevelGenerator : MonoBehaviour {
         //Actualizar a posição da camera conforme a sala
         if (cam.transform.position.x < currentRoom.transform.position.x) cam.transform.position += Vector3.right * camSpeed * Time.deltaTime;
         if (cam.transform.position.x > currentRoom.transform.position.x) cam.transform.position -= Vector3.right * camSpeed * Time.deltaTime;
-        if (cam.transform.position.z < currentRoom.transform.position.z) cam.transform.position += Vector3.forward * camSpeed * Time.deltaTime;
-        if (cam.transform.position.z > currentRoom.transform.position.z) cam.transform.position -= Vector3.forward * camSpeed * Time.deltaTime;
+        if (cam.transform.position.z < currentRoom.transform.position.z - 12) cam.transform.position += Vector3.forward * camSpeed * Time.deltaTime;
+        if (cam.transform.position.z > currentRoom.transform.position.z - 12) cam.transform.position -= Vector3.forward * camSpeed * Time.deltaTime;
 
         //Verificar se sala já foi derrotada e abrir portas
         if (currentRoom.clear)

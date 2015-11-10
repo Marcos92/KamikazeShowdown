@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\ConveyorBelt.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
+     <Compile Include="Assets\Scripts\FlameTrap.cs" />
      <Compile Include="Assets\Scripts\Gun.cs" />
      <Compile Include="Assets\Scripts\GunController.cs" />
      <Compile Include="Assets\Scripts\IDamageable.cs" />

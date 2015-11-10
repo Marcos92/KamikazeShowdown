@@ -122,7 +122,7 @@ public class Gun : MonoBehaviour {
                 int r = Random.Range(-15, 16);
                 rot = new Vector3(rot.x, rot.y + r, rot.z);
                 Projectile newProjectile = Instantiate(projectile, muzzle.position, Quaternion.Euler(rot)) as Projectile;
-                newProjectile.lifeTime -= Random.Range(0f, 0.1f);
+                newProjectile.lifeTime += Random.Range(-0.1f, 0.1f);
                 newProjectile.SetSpeed(muzzleVelocity);
             }
             else
