@@ -20,7 +20,7 @@ public class LevelGenerator : MonoBehaviour {
 	void Start () 
     {
         newMap = true;
-        map = new Room[10, 10];
+        map = new Room[11, 11];
 
         player = GameObject.FindGameObjectsWithTag("Player")[0];
         cam = GameObject.Find("Main Camera");
@@ -31,7 +31,7 @@ public class LevelGenerator : MonoBehaviour {
     {
 	    if(newMap)
         {
-            int x = 0, y = 0;
+            int x = 5, y = 5;
             map[x, y] = allRooms[0]; //Primeira sala
 
             //Gera a disposição e tipo de salas
@@ -90,7 +90,7 @@ public class LevelGenerator : MonoBehaviour {
                 }
             }
 
-            currentRoom = map[0, 0]; //Atribui a sala actual
+            currentRoom = map[5, 5]; //Atribui a sala actual
 
             NavMeshBuilder.BuildNavMesh();
 
@@ -108,28 +108,28 @@ public class LevelGenerator : MonoBehaviour {
         if (currentRoom.clear)
         {
             //Abre porta da esquerda
-            if ((int)GetCurrentRoomCoordinates().x - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y] != null && !map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].clear)
+            if ((int)GetCurrentRoomCoordinates().x - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y] != null)
             {
                 map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].OpenDoor(1);
                 currentRoom.OpenDoor(0);
             }
 
             //Abre porta da direita
-            if ((int)GetCurrentRoomCoordinates().x + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y] != null && !map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].clear)
+            if ((int)GetCurrentRoomCoordinates().x + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y] != null)
             {
                 map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].OpenDoor(0);
                 currentRoom.OpenDoor(1);
             }
 
             //Abre porta de cima
-            if ((int)GetCurrentRoomCoordinates().y + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1] != null && !map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].clear)
+            if ((int)GetCurrentRoomCoordinates().y + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1] != null)
             {
                 map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].OpenDoor(3);
                 currentRoom.OpenDoor(2);
             }
 
             //Abre porta de baixo
-            if ((int)GetCurrentRoomCoordinates().y - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1] != null && !map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].clear)
+            if ((int)GetCurrentRoomCoordinates().y - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1] != null)
             {
                 map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].OpenDoor(2);
                 currentRoom.OpenDoor(3);
@@ -137,21 +137,21 @@ public class LevelGenerator : MonoBehaviour {
         }
         else if (newRoom)
         {
-            //Fecha porta da direita da sala anterior
-            if ((int)GetCurrentRoomCoordinates().x - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y] != null && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].clear)
-                map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].CloseDoor(1);
+            ////Fecha porta da direita da sala anterior
+            //if ((int)GetCurrentRoomCoordinates().x - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y] != null && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].clear)
+            //    map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].CloseDoor(1);
 
-            //Fecha porta da esquerda da sala anterior
-            if ((int)GetCurrentRoomCoordinates().x + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y] != null && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].clear)
-                map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].CloseDoor(0);
+            ////Fecha porta da esquerda da sala anterior
+            //if ((int)GetCurrentRoomCoordinates().x + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y] != null && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].clear)
+            //    map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].CloseDoor(0);
 
-            //Fecha porta de baixo da sala anterior
-            if ((int)GetCurrentRoomCoordinates().y + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1] != null && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].clear)
-                map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].CloseDoor(3);
+            ////Fecha porta de baixo da sala anterior
+            //if ((int)GetCurrentRoomCoordinates().y + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1] != null && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].clear)
+            //    map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].CloseDoor(3);
 
-            //Fecha porta de cima da sala anterior
-            if ((int)GetCurrentRoomCoordinates().y - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1] != null && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].clear)
-                map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].CloseDoor(2);
+            ////Fecha porta de cima da sala anterior
+            //if ((int)GetCurrentRoomCoordinates().y - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1] != null && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].clear)
+            //    map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].CloseDoor(2);
 
             //Fecha todas as portas
             currentRoom.CloseDoor(0);
