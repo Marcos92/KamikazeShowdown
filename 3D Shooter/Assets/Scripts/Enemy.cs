@@ -10,15 +10,26 @@ public class Enemy : LivingEntity {
     };
     State currentState;
 
+    public enum Type
+    {
+        Melee, Roaming, Ranged
+    };
+    public Type type;
+
     NavMeshAgent pathFinder;
     Transform target;
     LivingEntity targetEntity;
 
-    float attackDistThreshold = .5f;
+    public float attackDistThreshold = .5f;
     float timeBetweenAttacks = 1;
-    float damage = 1;
+    public float meleeDamage = 1;
 
     float nextAttackTime;
+
+    //Ranged enemies
+    public Projectile projectile;
+    public float msBetweenShots, projectileSpeed;
+    float nextShootTime;
 
     // To get space after reaching player
     float mycollisionRadious;
@@ -97,16 +108,30 @@ public class Enemy : LivingEntity {
 
         while (percent <= 1)
         {
-            if (percent >= 0.5 && !hasAppliedDamage)
+            if(type == Type.Melee)
             {
-                hasAppliedDamage = true;
-                targetEntity.TakeDamage(damage);
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().combo = 1;
+                if (percent >= 0.5 && !hasAppliedDamage)
+                {
+                    hasAppliedDamage = true;
+                    targetEntity.TakeDamage(meleeDamage);
+                }
+                percent += Time.deltaTime * attackSpeed;
+                float interpolation = (-Mathf.Pow(percent, 2) + percent) * 4;
+                transform.position = Vector3.Lerp(originalPosition, attackPosition, interpolation);
             }
-            percent += Time.deltaTime * attackSpeed;
-            //parabola
-            float interpolation = (-Mathf.Pow(percent, 2) + percent) * 4;
-            transform.position = Vector3.Lerp(originalPosition, attackPosition, interpolation);
+            else if (type == Type.Ranged)
+            {
+                dirToTarget = (target.position - transform.position).normalized;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget), Time.deltaTime * 5f);
+
+                if (Time.time > nextShootTime)
+                {
+                    nextShootTime = Time.time + msBetweenShots / 1000;
+                    Projectile newProjectile = Instantiate(projectile, transform.position, transform.rotation) as Projectile;
+                    newProjectile.SetSpeed(projectileSpeed);
+                }
+                percent += Time.deltaTime;
+            }
 
             yield return null;
         }

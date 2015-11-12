@@ -16,8 +16,12 @@ public class Player : LivingEntity {
     public float dodgeVelocityMultiplier = 1.5f;
     bool dodging;
 
+    [HideInInspector]
     public int combo;
+    [HideInInspector]
     public int score;
+
+    float currentHealth;
 
 	protected override void Start ()
     {
@@ -71,6 +75,11 @@ public class Player : LivingEntity {
         //Ammo
         if (!gunController.equippedGun.infinite && gunController.equippedGun.ammo <= 0)
             gunController.EquipGun(gunController.startingGun);
+
+        //Combo 
+        if(health < currentHealth) combo = 1;
+
+        currentHealth = health;
     }
 
     void OnTriggerEnter(Collider c)
