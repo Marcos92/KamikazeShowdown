@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class ConveyorBelt : MonoBehaviour {
 
@@ -11,15 +12,16 @@ public class ConveyorBelt : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+    {
+        gameObject.transform.FindChild("Cube").GetComponent<Renderer>().material.mainTextureOffset += new Vector2(0.15f * Time.deltaTime, 0) * 10;
 	}
 
     private void OnTriggerStay(Collider c)
     {
         if(c.gameObject.tag == "Player" || c.gameObject.tag == "Enemy")
         {
-            c.gameObject.transform.position += new Vector3(speedX, 0, speedZ);
+            c.gameObject.transform.position += new Vector3(speedX * Time.deltaTime, 0, speedZ * Time.deltaTime) * 35;
         }
     }
 }

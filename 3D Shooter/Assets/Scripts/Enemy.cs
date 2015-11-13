@@ -130,7 +130,7 @@ public class Enemy : LivingEntity {
                     Projectile newProjectile = Instantiate(projectile, transform.position, transform.rotation) as Projectile;
                     newProjectile.SetSpeed(projectileSpeed);
                 }
-                percent += Time.deltaTime;
+                percent += Time.deltaTime * 0.5f;
             }
 
             yield return null;
@@ -145,18 +145,24 @@ public class Enemy : LivingEntity {
     {
         float refreshRate = 0.25f;
 
-        while (hasTarget)
+        if(type != Type.Roaming)
         {
-            if (currentState == State.Chasing)
+            while (hasTarget)
             {
-                Vector3 dirToTarget = (target.position - transform.position).normalized;
-                Vector3 targetPosition = target.position - dirToTarget * (mycollisionRadious + targetCollisionRadious + attackDistThreshold/2);
-                if (!dead)
+                if (currentState == State.Chasing)
                 {
-                    pathFinder.SetDestination(targetPosition);
+                    Vector3 dirToTarget = (target.position - transform.position).normalized;
+                    Vector3 targetPosition = target.position - dirToTarget * (mycollisionRadious + targetCollisionRadious + attackDistThreshold / 2);
+                    if (!dead)
+                    {
+                        pathFinder.SetDestination(targetPosition);
+                    }
                 }
+                yield return new WaitForSeconds(refreshRate);
             }
-            yield return new WaitForSeconds(refreshRate);
+        }
+        else
+        {
         }
     }
 }

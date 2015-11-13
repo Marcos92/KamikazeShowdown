@@ -46,7 +46,7 @@ public class FlameTrap : MonoBehaviour {
             Vector3 rot = transform.rotation.eulerAngles;
             int r = Random.Range(-15, 16);
             rot = new Vector3(rot.x, rot.y + r, rot.z);
-            Projectile newProjectile = Instantiate(flame, transform.position + transform.forward * 2, Quaternion.Euler(rot)) as Projectile;
+            Projectile newProjectile = Instantiate(flame, transform.position + transform.forward * 3, Quaternion.Euler(rot)) as Projectile;
             newProjectile.lifeTime += Random.Range(-0.1f, 0.1f);
             newProjectile.SetSpeed(shotSpeed);
         }
