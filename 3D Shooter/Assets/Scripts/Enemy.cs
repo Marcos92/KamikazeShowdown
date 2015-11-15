@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent (typeof (NavMeshAgent))]
 public class Enemy : LivingEntity {
@@ -30,6 +31,9 @@ public class Enemy : LivingEntity {
     public Projectile projectile;
     public float msBetweenShots, projectileSpeed;
     float nextShootTime;
+
+    //Roaming 
+    public LayerMask collisionMask;
 
     // To get space after reaching player
     float mycollisionRadious;
@@ -163,6 +167,21 @@ public class Enemy : LivingEntity {
         }
         else
         {
+            while(true)
+            {
+                Vector3 targetPosition = transform.position + transform.forward;
+                if (!dead) pathFinder.SetDestination(targetPosition);
+
+                Ray ray = new Ray(transform.position, transform.forward);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, 10f, collisionMask, QueryTriggerInteraction.Collide))
+                {
+                    transform.Rotate(Vector3.up, (float)Math.PI / 2.0f);
+                }
+
+                yield return new WaitForSeconds(refreshRate);
+            }
         }
     }
 }

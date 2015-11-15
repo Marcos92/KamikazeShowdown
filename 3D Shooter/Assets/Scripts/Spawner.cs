@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Spawner : MonoBehaviour {
 
@@ -29,6 +28,10 @@ public class Spawner : MonoBehaviour {
             nextSpawnTime = Time.time + currentWave.timebetweenSpawns;
 
             Enemy spawnedEnemy = Instantiate(enemy, transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)), Quaternion.identity) as Enemy;
+            if (spawnedEnemy.type == Enemy.Type.Roaming)
+            {
+                spawnedEnemy.transform.Rotate(Vector3.up, (float)System.Math.PI / 4.0f);
+            }
             spawnedEnemy.onDeath += OnEnemyDeath;
         }
     }
