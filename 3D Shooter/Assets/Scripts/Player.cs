@@ -15,6 +15,8 @@ public class Player : LivingEntity {
     public int msBetweenDodges = 500;
     public float dodgeVelocityMultiplier = 1.5f;
     bool dodging;
+    bool canDodge;
+    int i = 0;
 
     [HideInInspector]
     public int combo;
@@ -30,6 +32,8 @@ public class Player : LivingEntity {
         gunController = GetComponent<GunController>();
         viewCamera = Camera.main;
         combo = 1;
+        canDodge = true;
+        dodging = false;
 	}
 	
 	void Update ()
@@ -38,8 +42,11 @@ public class Player : LivingEntity {
 	    Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         Vector3 moveVelocity = moveInput.normalized * moveSpeed;
         if (!dodging) controller.Move(moveVelocity);
-        else controller.Move(moveVelocity * dodgeVelocityMultiplier);
-
+        else if (dodging)
+        {
+            i++;
+            controller.Move(moveInput.normalized * 40f);//controller.Move(moveVelocity * dodgeVelocityMultiplier);
+        }
         // Look input
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
@@ -59,14 +66,20 @@ public class Player : LivingEntity {
         }
 
         //Dodge
-        if (!dodging && Input.GetMouseButtonDown(1) && moveVelocity != Vector3.zero)
+        if (canDodge && !dodging && Input.GetMouseButtonDown(1) && moveVelocity != Vector3.zero)
         {
             dodging = true;
+            canDodge = false;
             nextDodgeTime = Time.time + msBetweenDodges / 1000f;
         }
-        else if (dodging && Time.time > nextDodgeTime)
+        else if (dodging && i > 5)
         {
             dodging = false;
+            i = 0;
+        }
+        else if (!canDodge && Time.time > nextDodgeTime)
+        {
+            canDodge = true;
         }
 
         //if (dodging) skinMaterial.color = Color.green;

@@ -12,6 +12,8 @@ public class LivingEntity : MonoBehaviour, IDamageable {
 
     public event System.Action onDeath;
 
+    public GameObject deathParticle;
+
     protected virtual void Start()
     {
         health = startingHealth;
@@ -26,9 +28,12 @@ public class LivingEntity : MonoBehaviour, IDamageable {
 
     public void TakeDamage(float damage)
     {
+        Quaternion back = new Quaternion(transform.rotation.x, -transform.rotation.y, transform.rotation.z, 0);
+        Destroy(Instantiate(deathParticle, gameObject.transform.position, back) as GameObject, 2);
         health -= damage;
         if (health <= 0 && !dead)
         {
+            
             Die();
         }
     }
