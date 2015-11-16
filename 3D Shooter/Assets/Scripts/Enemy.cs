@@ -50,6 +50,8 @@ public class Enemy : LivingEntity {
         skinMaterial = GetComponent<Renderer>().material;
         originalColor = skinMaterial.color;
 
+        transform.forward = new Vector3(0.5f, 0, 0.5f);
+
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
             currentState = State.Chasing;
@@ -92,7 +94,7 @@ public class Enemy : LivingEntity {
                     StartCoroutine(Attack());
                 }
             }
-        } 
+        }
     }
 
     IEnumerator Attack()
@@ -179,6 +181,8 @@ public class Enemy : LivingEntity {
                 {
                     transform.Rotate(Vector3.up, (float)Math.PI / 2.0f);
                 }
+
+                Debug.Log(hit.collider);
 
                 yield return new WaitForSeconds(refreshRate);
             }
