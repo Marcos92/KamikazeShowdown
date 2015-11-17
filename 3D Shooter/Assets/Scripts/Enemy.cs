@@ -149,10 +149,10 @@ public class Enemy : LivingEntity {
 
     IEnumerator UpdatePath()
     {
-        float refreshRate = 0.25f;
-
         if(type != Type.Roaming)
         {
+            float refreshRate = 0.25f;
+
             while (hasTarget)
             {
                 if (currentState == State.Chasing)
@@ -169,6 +169,8 @@ public class Enemy : LivingEntity {
         }
         else
         {
+            float refreshRate = 0.1f;
+
             while(true)
             {
                 Vector3 targetPosition = transform.position + transform.forward;
@@ -177,12 +179,10 @@ public class Enemy : LivingEntity {
                 Ray ray = new Ray(transform.position, transform.forward);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 10f, collisionMask, QueryTriggerInteraction.Collide))
+                if (Physics.Raycast(ray, out hit, 2f, collisionMask, QueryTriggerInteraction.Collide))
                 {
-                    transform.Rotate(Vector3.up, (float)Math.PI / 2.0f);
+                    transform.forward = Vector3.Reflect(transform.forward, hit.normal);
                 }
-
-                Debug.Log(hit.collider);
 
                 yield return new WaitForSeconds(refreshRate);
             }

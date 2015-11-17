@@ -13,7 +13,7 @@ public class Player : LivingEntity {
 
     float nextDodgeTime;
     public int msBetweenDodges = 500;
-    public float dodgeVelocityMultiplier = 1.5f;
+    public float dodgeSpeed = 1.5f;
     bool dodging;
     bool canDodge;
     int i = 0;
@@ -45,7 +45,7 @@ public class Player : LivingEntity {
         else if (dodging)
         {
             i++;
-            controller.Move(moveInput.normalized * 40f);//controller.Move(moveVelocity * dodgeVelocityMultiplier);
+            controller.Move(moveInput.normalized * dodgeSpeed);
         }
         // Look input
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);

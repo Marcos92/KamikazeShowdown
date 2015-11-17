@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour {
     public LayerMask collisionMask;
     float speed;
     public float damage = 1;
+    public int bounces = 1;
 
     public float lifeTime = 2;
     float skinWidth = 0.1f;
@@ -40,7 +41,9 @@ public class Projectile : MonoBehaviour {
 
         if (Physics.Raycast(ray, out hit, moveDistance + skinWidth, collisionMask, QueryTriggerInteraction.Collide))
         {
+            bounces--;
             OnHitObject(hit);
+            if(bounces > 0) transform.forward = Vector3.Reflect(transform.forward, hit.normal);
         }
     }
     void OnHitObject(RaycastHit hit)
@@ -50,7 +53,7 @@ public class Projectile : MonoBehaviour {
         {
             damageableObject.TakeHit(damage, hit);
         }
-        GameObject.Destroy(gameObject);
+        if(bounces <= 0) GameObject.Destroy(gameObject);
     }
 
     void OnHitObject(Collider c)
@@ -60,6 +63,6 @@ public class Projectile : MonoBehaviour {
         {
             damageableObject.TakeDamage(damage);
         }
-        GameObject.Destroy(gameObject);
+        if(bounces <= 0) GameObject.Destroy(gameObject);
     }
 }
