@@ -177,9 +177,10 @@ public class Enemy : LivingEntity {
                 if (!dead) pathFinder.SetDestination(targetPosition);
 
                 Ray ray = new Ray(transform.position, transform.forward);
+                Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 4, transform.position.z), transform.forward, Color.cyan);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 2f, collisionMask, QueryTriggerInteraction.Collide))
+                if (Physics.Raycast(ray, out hit, 4f, collisionMask, QueryTriggerInteraction.Collide))
                 {
                     transform.forward = Vector3.Reflect(transform.forward, hit.normal);
                 }
