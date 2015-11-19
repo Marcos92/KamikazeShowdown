@@ -42,6 +42,7 @@ public class Enemy : LivingEntity {
     bool hasTarget;
 
     public int score;
+
     
 	protected override void Start () 
     {
@@ -151,7 +152,7 @@ public class Enemy : LivingEntity {
     {
         if(type != Type.Roaming)
         {
-            float refreshRate = 0.25f;
+            float refreshRate = 3f;
 
             while (hasTarget)
             {
