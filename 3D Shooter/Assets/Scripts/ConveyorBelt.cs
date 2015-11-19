@@ -14,7 +14,7 @@ public class ConveyorBelt : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        gameObject.transform.FindChild("Cube").GetComponent<Renderer>().material.mainTextureOffset += new Vector2(0.15f * Time.deltaTime, 0) * 10;
+        gameObject.transform.FindChild("Cube").GetComponent<Renderer>().material.mainTextureOffset += new Vector2(speedX * Time.deltaTime, speedZ) * 10;
 	}
 
     private void OnTriggerStay(Collider c)

@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour {
     public float lifeTime = 2;
     float skinWidth = 0.1f;
 
+    public Color trailColor;
+
     void Start()
     {
         Destroy(gameObject, lifeTime);
@@ -19,6 +21,10 @@ public class Projectile : MonoBehaviour {
         if (initialCollisions.Length > 0)
         {
             OnHitObject(initialCollisions[0]);
+        }
+        if (GetComponent<TrailRenderer>() != null)
+        {
+            GetComponent<TrailRenderer>().material.SetColor("_TintColor", trailColor);
         }
     }
 
