@@ -7,7 +7,7 @@ public class PUManager : MonoBehaviour {
     public GameObject[] pickUpList;
     float nextSpawn;
     public float maxSpawnDelay, minSpawnDelay;
-    GameObject room;
+    Room currentRoom;
 
 	// Use this for initialization
 	void Start ()
@@ -20,16 +20,16 @@ public class PUManager : MonoBehaviour {
     {
         //METER A FAZER SPAWN NA NAV MESH
 
-	    if(Time.time > nextSpawn)
+        if (Time.time > nextSpawn && !currentRoom.clear)
         {
             nextSpawn = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay + 1);
 
-            float randomX = Random.Range(room.transform.position.x - room.GetComponent<Renderer>().bounds.size.x / 2.5f, room.transform.position.x + room.GetComponent<Renderer>().bounds.size.x / 2.5f);
-            float randomZ = Random.Range(room.transform.position.z - room.GetComponent<Renderer>().bounds.size.z / 2.5f, room.transform.position.z + room.GetComponent<Renderer>().bounds.size.z / 2.5f);
+            float randomX = Random.Range(currentRoom.room.transform.position.x - currentRoom.room.GetComponent<Renderer>().bounds.size.x / 2.5f, currentRoom.room.transform.position.x + currentRoom.room.GetComponent<Renderer>().bounds.size.x / 2.5f);
+            float randomZ = Random.Range(currentRoom.room.transform.position.z - currentRoom.room.GetComponent<Renderer>().bounds.size.z / 2.5f, currentRoom.room.transform.position.z + currentRoom.room.GetComponent<Renderer>().bounds.size.z / 2.5f);
 
             PickUp newPU = Instantiate(pickUpList[Random.Range(0, pickUpList.Length)], new Vector3(randomX, 0, randomZ), Quaternion.identity) as PickUp;
         }
 
-        if (gameObject.GetComponent<LevelGenerator>().currentRoom != null) room = gameObject.GetComponent<LevelGenerator>().currentRoom.room;
+        if (gameObject.GetComponent<LevelGenerator>().currentRoom != null) currentRoom = gameObject.GetComponent<LevelGenerator>().currentRoom;
 	}
 }

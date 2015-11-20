@@ -51,7 +51,11 @@ public class Enemy : LivingEntity {
         skinMaterial = GetComponent<Renderer>().material;
         originalColor = skinMaterial.color;
 
-        transform.forward = new Vector3(0.5f, 0, 0.5f);
+        if (type == Type.Roaming)
+        {
+            //RANDOMIZAR
+            transform.forward = new Vector3(0.5f, 0, 0.5f);
+        }
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
