@@ -32,6 +32,8 @@ public class Enemy : LivingEntity {
     public float msBetweenShots, projectileSpeed;
     float nextShootTime;
 
+    UnityEngine.Random rand;
+
     //Roaming 
     public LayerMask collisionMask;
 
@@ -41,7 +43,10 @@ public class Enemy : LivingEntity {
 
     bool hasTarget;
 
+    int refreshRate;
+
     public int score;
+
 
     
 	protected override void Start () 
@@ -133,7 +138,7 @@ public class Enemy : LivingEntity {
             else if (type == Type.Ranged)
             {
                 dirToTarget = (target.position - transform.position).normalized;
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget), Time.deltaTime * 5f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget), Time.deltaTime * 2f);
 
                 if (Time.time > nextShootTime)
                 {
@@ -156,7 +161,9 @@ public class Enemy : LivingEntity {
     {
         if(type != Type.Roaming)
         {
-            float refreshRate = 3f;
+            
+            // 0,1f - 3f
+            float refreshRate = UnityEngine.Random.Range(0.025f, 2f);
 
             while (hasTarget)
             {
