@@ -14,14 +14,12 @@ public class LivingEntity : MonoBehaviour, IDamageable {
 
     public GameObject hitParticle;
     public GameObject enemyDeathParticle;
-    GameObject player;
 
     protected virtual void Start()
     {
         health = startingHealth;
         skinMaterial = GetComponent<Renderer>().material;
         originalColor = skinMaterial.color;
-        player = GameObject.FindGameObjectWithTag("Player");
     }
 
 	public void TakeHit(float damage, RaycastHit hit)

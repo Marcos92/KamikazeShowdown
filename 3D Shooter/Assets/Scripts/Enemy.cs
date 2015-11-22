@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
 [RequireComponent (typeof (NavMeshAgent))]
 public class Enemy : LivingEntity {
@@ -13,7 +12,7 @@ public class Enemy : LivingEntity {
 
     public enum Type
     {
-        Melee, Roaming, Ranged
+        Melee, Roaming, Ranged, Boss1
     };
     public Type type;
 
@@ -29,13 +28,16 @@ public class Enemy : LivingEntity {
 
     //Ranged enemies
     public Projectile projectile;
+    public Transform shootPosition;
     public float msBetweenShots, projectileSpeed;
     float nextShootTime;
 
-    UnityEngine.Random rand;
-
     //Roaming 
     public LayerMask collisionMask;
+
+    //Boss 1
+    Vector3 movement;
+    int direction;
 
     // To get space after reaching player
     float mycollisionRadious;
@@ -43,11 +45,7 @@ public class Enemy : LivingEntity {
 
     bool hasTarget;
 
-    int refreshRate;
-
     public int score;
-
-
     
 	protected override void Start () 
     {
@@ -58,8 +56,19 @@ public class Enemy : LivingEntity {
 
         if (type == Type.Roaming)
         {
-            //RANDOMIZAR
-            transform.forward = new Vector3(0.5f, 0, 0.5f);
+            int r = Random.Range(0, 4);
+            if(r == 0) transform.forward = new Vector3(0.5f, 0, 0.5f);
+            else if(r == 1) transform.forward = new Vector3(-0.5f, 0, 0.5f);
+            else if (r == 2) transform.forward = new Vector3(0.5f, 0, -0.5f);
+            else transform.forward = new Vector3(-0.5f, 0, -0.5f);
+        }
+
+        if (type == Type.Boss1)
+        {
+            int direction = Random.Range(0, 2);
+            if (direction == 0) direction = -1;
+
+            movement = Vector3.right * direction;
         }
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
@@ -67,13 +76,14 @@ public class Enemy : LivingEntity {
             currentState = State.Chasing;
             hasTarget = true;
             target = GameObject.FindGameObjectWithTag("Player").transform;
+            transform.forward = (new Vector3(target.position.x, 0, target.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized;
             targetEntity = target.GetComponent<LivingEntity>();
             targetEntity.onDeath += OntargetDeath;
 
             mycollisionRadious = GetComponent<CapsuleCollider>().radius;
             targetCollisionRadious = target.GetComponent<CapsuleCollider>().radius;
 
-            StartCoroutine(UpdatePath());
+            if(type == Type.Melee || type == Type.Roaming || type == Type.Ranged) StartCoroutine(UpdatePath());
 
             onDeath += ScoreIncrease;
         }
@@ -93,17 +103,56 @@ public class Enemy : LivingEntity {
 	
 	void Update ()
     {
-        if (hasTarget)
+        //Boss1
+        if(type == Type.Boss1)
         {
-            if (Time.time > nextAttackTime)
+            #region
+            if (hasTarget)
             {
-                float sqrDistToTarget = (target.position - transform.position).sqrMagnitude;
-                if (sqrDistToTarget < Mathf.Pow(attackDistThreshold + mycollisionRadious + targetCollisionRadious, 2))
+                //Point to target
+                Vector3 dirToTarget = (new Vector3(target.position.x, 0, target.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget), Time.deltaTime * 100f);
+
+                //Shoot
+                if (nextShootTime < Time.time)
                 {
-                    nextAttackTime = Time.time + timeBetweenAttacks;
-                    StartCoroutine(Attack());
+                    nextShootTime = Time.time + msBetweenShots / 1000f;
+
+                    Projectile newProjectile = Instantiate(projectile, shootPosition.position, transform.rotation) as Projectile;
+                    newProjectile.SetSpeed(projectileSpeed);
                 }
             }
+
+            //Move
+            transform.position += movement * Time.deltaTime * pathFinder.speed;
+
+            //Check walls
+            Ray ray = new Ray(transform.position, movement);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 3f, collisionMask, QueryTriggerInteraction.Collide))
+            {
+                movement = Quaternion.Euler(0, 90f, 0) * movement;
+            }
+            #endregion
+        }
+        //General
+        else
+        {
+            #region
+            if (hasTarget)
+            {
+                if (Time.time > nextAttackTime)
+                {
+                    float sqrDistToTarget = (target.position - transform.position).sqrMagnitude;
+                    if (sqrDistToTarget < Mathf.Pow(attackDistThreshold + mycollisionRadious + targetCollisionRadious, 2))
+                    {
+                        nextAttackTime = Time.time + timeBetweenAttacks;
+                        StartCoroutine(Attack());
+                    }
+                }
+            }
+            #endregion
         }
     }
 
@@ -161,9 +210,7 @@ public class Enemy : LivingEntity {
     {
         if(type != Type.Roaming)
         {
-            
-            // 0,1f - 3f
-            float refreshRate = UnityEngine.Random.Range(0.025f, 2f);
+            float refreshRate = 0.25f;
 
             while (hasTarget)
             {
@@ -189,10 +236,10 @@ public class Enemy : LivingEntity {
                 if (!dead) pathFinder.SetDestination(targetPosition);
 
                 Ray ray = new Ray(transform.position, transform.forward);
-                Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 4, transform.position.z), transform.forward, Color.cyan);
+                //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 4, transform.position.z), transform.forward, Color.cyan);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 4f, collisionMask, QueryTriggerInteraction.Collide))
+                if (Physics.Raycast(ray, out hit, 6f, collisionMask, QueryTriggerInteraction.Collide))
                 {
                     transform.forward = Vector3.Reflect(transform.forward, hit.normal);
                 }
