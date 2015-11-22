@@ -103,4 +103,13 @@ public class Player : LivingEntity {
             Destroy(c.gameObject);
         }
     }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Wall")
+        {
+            dodging = false;
+            canDodge = false;
+        }
+    }
 }
