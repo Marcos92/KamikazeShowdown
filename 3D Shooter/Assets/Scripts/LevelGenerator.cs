@@ -158,9 +158,9 @@ public class LevelGenerator : MonoBehaviour {
         }
 
         //Verificar em que sala está o jogador
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 25; i++)
         {
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < 25; j++)
             {
                 if (map[i, j] != null
                     && player.transform.position.x < map[i, j].transform.position.x + map[i, j].room.GetComponent<Renderer>().bounds.size.x / 2

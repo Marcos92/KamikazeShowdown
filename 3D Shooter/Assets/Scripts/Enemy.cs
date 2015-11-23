@@ -181,6 +181,7 @@ public class Enemy : LivingEntity {
             {
                 if (percent >= 0.5 && !hasAppliedDamage)
                 {
+                    transform.forward = dirToTarget;
                     hasAppliedDamage = true;
                     targetEntity.TakeDamage(meleeDamage);
                 }
@@ -213,7 +214,7 @@ public class Enemy : LivingEntity {
     {
         if(type != Type.Roaming)
         {
-            float refreshRate = 0.25f;
+            float refreshRate = Random.Range(0.035f, 1.25f);
 
             while (hasTarget)
             {
