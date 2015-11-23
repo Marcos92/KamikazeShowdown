@@ -4,7 +4,7 @@ using System.Collections;
 public class LivingEntity : MonoBehaviour, IDamageable {
 
     public float startingHealth;
-    protected float health;
+    public float health;
     protected bool dead;
 
     public Material skinMaterial;
