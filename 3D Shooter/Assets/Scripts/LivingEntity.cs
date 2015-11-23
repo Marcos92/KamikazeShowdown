@@ -29,10 +29,10 @@ public class LivingEntity : MonoBehaviour, IDamageable {
         health -= damage;
         if (health <= 0 && !dead)
         {
-            //if (gameObject.tag == "Enemy")
-            //{
-            //    Destroy(Instantiate(enemyDeathParticle, gameObject.transform.position, Quaternion.FromToRotation(player.transform.position, player.transform.position-Camera.main.ScreenToViewportPoint(Input.mousePosition))), 2);
-            //}
+            if (gameObject.tag == "Enemy")
+            {
+                Destroy(Instantiate(enemyDeathParticle, gameObject.transform.position, Quaternion.FromToRotation(transform.position, transform.position - Camera.main.ScreenToViewportPoint(Input.mousePosition))), 2);
+            }
             Die();
         }
     }

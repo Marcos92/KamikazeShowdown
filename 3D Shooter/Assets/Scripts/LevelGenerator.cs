@@ -158,20 +158,23 @@ public class LevelGenerator : MonoBehaviour {
         }
 
         //Verificar em que sala está o jogador
-        for (int i = 0; i < 25; i++)
+        if (player != null)
         {
-            for (int j = 0; j < 25; j++)
+            for (int i = 0; i < 25; i++)
             {
-                if (map[i, j] != null
-                    && player.transform.position.x < map[i, j].transform.position.x + map[i, j].room.GetComponent<Renderer>().bounds.size.x / 2
-                    && player.transform.position.x > map[i, j].transform.position.x - map[i, j].room.GetComponent<Renderer>().bounds.size.x / 2
-                    && player.transform.position.z < map[i, j].transform.position.z + map[i, j].room.GetComponent<Renderer>().bounds.size.z / 2
-                    && player.transform.position.z > map[i, j].transform.position.z - map[i, j].room.GetComponent<Renderer>().bounds.size.z / 2)
+                for (int j = 0; j < 25; j++)
                 {
-                    if (currentRoom != map[i, j])
+                    if (map[i, j] != null
+                        && player.transform.position.x < map[i, j].transform.position.x + map[i, j].room.GetComponent<Renderer>().bounds.size.x / 2
+                        && player.transform.position.x > map[i, j].transform.position.x - map[i, j].room.GetComponent<Renderer>().bounds.size.x / 2
+                        && player.transform.position.z < map[i, j].transform.position.z + map[i, j].room.GetComponent<Renderer>().bounds.size.z / 2
+                        && player.transform.position.z > map[i, j].transform.position.z - map[i, j].room.GetComponent<Renderer>().bounds.size.z / 2)
                     {
-                        newRoom = true;
-                        currentRoom = map[i, j];
+                        if (currentRoom != map[i, j])
+                        {
+                            newRoom = true;
+                            currentRoom = map[i, j];
+                        }
                     }
                 }
             }
