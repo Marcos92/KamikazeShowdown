@@ -7,9 +7,6 @@ public class LivingEntity : MonoBehaviour, IDamageable {
     public float health;
     protected bool dead;
 
-    public Material skinMaterial;
-    public Color originalColor;
-
     public event System.Action onDeath;
 
     public GameObject hitParticle;
@@ -18,8 +15,6 @@ public class LivingEntity : MonoBehaviour, IDamageable {
     protected virtual void Start()
     {
         health = startingHealth;
-        skinMaterial = GetComponent<Renderer>().material;
-        originalColor = skinMaterial.color;
     }
 
 	public void TakeHit(float damage, RaycastHit hit)

@@ -46,13 +46,13 @@ public class Enemy : LivingEntity {
     bool hasTarget;
 
     public int score;
+
+    Animator anim;
     
 	protected override void Start () 
     {
         base.Start();
         pathFinder = GetComponent<NavMeshAgent>();
-        skinMaterial = GetComponent<Renderer>().material;
-        originalColor = skinMaterial.color;
 
         if (type == Type.Roaming)
         {
@@ -87,6 +87,8 @@ public class Enemy : LivingEntity {
 
             onDeath += ScoreIncrease;
         }
+
+        anim = GetComponentInChildren<Animator>();
 	}
 
     void OntargetDeath()
@@ -161,6 +163,9 @@ public class Enemy : LivingEntity {
         currentState = State.Attacking;
         pathFinder.enabled = false;
 
+        if (type == Type.Melee)
+            anim.Play("Idle"); // Idle = attack
+
         Vector3 originalPosition = transform.position;
         Vector3 dirToTarget = (target.position - transform.position).normalized;
         Vector3 attackPosition = target.position - dirToTarget * (mycollisionRadious + (targetCollisionRadious/2));
@@ -168,7 +173,6 @@ public class Enemy : LivingEntity {
         float percent = 0; // 0 to 1
         float attackSpeed = 3;
 
-        skinMaterial.color = Color.red;
         bool hasAppliedDamage = false;
 
         while (percent <= 1)
@@ -201,7 +205,6 @@ public class Enemy : LivingEntity {
             yield return null;
         }
 
-        skinMaterial.color = originalColor;
         currentState = State.Chasing;
         pathFinder.enabled = true;
     }

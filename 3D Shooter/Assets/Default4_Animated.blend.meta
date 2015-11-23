@@ -1,0 +1,267 @@
+fileFormatVersion: 2
+guid: 9914c966d7cec5e4cbaa0f7fc27db816
+timeCreated: 1448221540
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Arm2Left
+    100002: Arm2Right
+    100004: Armature
+    100006: ArmLeft
+    100008: //RootNode
+    100010: HandDownLeft
+    100012: HandDownRight
+    100014: HandUpLeft
+    100016: HandUpLeft_001
+    100018: HandUpRight
+    100020: HandUpRight_001
+    100022: Head
+    100024: Plane
+    100026: ShoulderArmRight
+    400000: Arm2Left
+    400002: Arm2Right
+    400004: Armature
+    400006: ArmLeft
+    400008: //RootNode
+    400010: HandDownLeft
+    400012: HandDownRight
+    400014: HandUpLeft
+    400016: HandUpLeft_001
+    400018: HandUpRight
+    400020: HandUpRight_001
+    400022: Head
+    400024: Plane
+    400026: ShoulderArmRight
+    4300000: Plane
+    7400000: Idle
+    7400002: Arranque
+    7400004: Run
+    9500000: //RootNode
+    13700000: Plane
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Head
+        weight: 1
+      - path: Armature/Head/ArmLeft
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left/HandDownLeft
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left/HandUpLeft
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left/HandUpLeft/HandUpLeft_001
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right/HandDownRight
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right/HandUpRight
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right/HandUpRight/HandUpRight_001
+        weight: 1
+      - path: Plane
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Arranque
+      takeName: Arranque
+      firstFrame: 0
+      lastFrame: 14
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Head
+        weight: 1
+      - path: Armature/Head/ArmLeft
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left/HandDownLeft
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left/HandUpLeft
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left/HandUpLeft/HandUpLeft_001
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right/HandDownRight
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right/HandUpRight
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right/HandUpRight/HandUpRight_001
+        weight: 1
+      - path: Plane
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Run
+      takeName: Run
+      firstFrame: 0
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Head
+        weight: 1
+      - path: Armature/Head/ArmLeft
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left/HandDownLeft
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left/HandUpLeft
+        weight: 1
+      - path: Armature/Head/ArmLeft/Arm2Left/HandUpLeft/HandUpLeft_001
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right/HandDownRight
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right/HandUpRight
+        weight: 1
+      - path: Armature/Head/ShoulderArmRight/Arm2Right/HandUpRight/HandUpRight_001
+        weight: 1
+      - path: Plane
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
