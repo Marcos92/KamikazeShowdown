@@ -14,6 +14,8 @@ public class Room : MonoBehaviour
     public Spawner[] spawners = new Spawner[4];
     GameObject[] doors = new GameObject[4];
 
+    public bool boss;
+
 	// Use this for initialization
 	void Start () 
     {

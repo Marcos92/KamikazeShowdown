@@ -4,14 +4,16 @@ using UnityEditor;
 
 public class LevelGenerator : MonoBehaviour {
 
-    public Room[] allRooms;
+    public Room[] normalRooms;
+    public Room[] bossRooms;
     Room[,] map;
 
     [HideInInspector]
     public Room currentRoom;
     bool newMap, newRoom;
-    public int nRooms; //Número de salas
+    int nRooms; //Número de salas
     int maxSize = 25;
+    int level = 1;
 
     private GameObject player, cam;
 
@@ -21,7 +23,7 @@ public class LevelGenerator : MonoBehaviour {
 	void Start () 
     {
         newMap = true;
-        map = new Room[25, 25];
+        map = new Room[maxSize, maxSize];
 
         player = GameObject.FindGameObjectsWithTag("Player")[0];
         cam = GameObject.Find("Main Camera");
@@ -32,25 +34,27 @@ public class LevelGenerator : MonoBehaviour {
     {
 	    if(newMap)
         {
-            int x = 12, y = 12;
-            map[x, y] = allRooms[0]; //Primeira sala
+            nRooms = level * 1;
+
+            int x = maxSize / 2, y = maxSize / 2;
+            map[x, y] = normalRooms[0]; //Primeira sala
 
             //Gera a disposição e tipo de salas
-            for (int i = 0; i < nRooms; i++)
+            for (int i = 0; i < nRooms + 1; i++)
             {
                 int randomPath, newX, newY, randomRoom;
 
                 newX = x;
                 newY = y;
 
-                if ((x <= 0 || map[x - 1, y] != null) && (x >= maxSize - 1 || map[x + 1, y] != null)) randomPath = 1; //Não pode expandir na horizontal
-                else if ((y <= 0 || map[x, y - 1] != null) && (y >= maxSize - 1 || map[x, y + 1] != null)) randomPath = 0; //Não pode expandir na vertical
+                if ((x <= 1 || map[x - 1, y] != null) && (x >= maxSize - 2 || map[x + 1, y] != null)) randomPath = 1; //Não pode expandir na horizontal
+                else if ((y <= 1 || map[x, y - 1] != null) && (y >= maxSize - 2 || map[x, y + 1] != null)) randomPath = 0; //Não pode expandir na vertical
                 else randomPath = Random.Range(0, 2); //Escolhe se expande na vertical ou horizontal
 
                 if(randomPath == 0)
                 {
-                    if (x <= 0 || map[x - 1, y] != null) x++; //Não pode criar mais salas à esquerda
-                    else if (x >= maxSize - 1 || map[x + 1, y] != null) x--; //Não pode criar mais salas à direita
+                    if (x <= 1 || map[x - 1, y] != null) x++; //Não pode criar mais salas à esquerda
+                    else if (x >= maxSize - 2 || map[x + 1, y] != null) x--; //Não pode criar mais salas à direita
                     else
                     {
                         while (newX == x)
@@ -62,8 +66,8 @@ public class LevelGenerator : MonoBehaviour {
                 }
                 else
                 {
-                    if (y <= 0 || map[x, y - 1] != null) y++; //Não pode criar mais salas em baixo
-                    else if (y >= maxSize - 1 || map[x, y + 1] != null) y--; //Não pode criar mais salas em cima
+                    if (y <= 1 || map[x, y - 1] != null) y++; //Não pode criar mais salas em baixo
+                    else if (y >= maxSize - 2 || map[x, y + 1] != null) y--; //Não pode criar mais salas em cima
                     else 
                     {
                         while (newY == y)
@@ -74,14 +78,18 @@ public class LevelGenerator : MonoBehaviour {
                     }
                 }
 
-                randomRoom = Random.Range(0, allRooms.Length); //Escolhe a sala a ser gerada
-                map[x, y] = allRooms[randomRoom];
+                if (i == nRooms) map[x, y] = bossRooms[level - 1]; //Sala do boss
+                else
+                {
+                    randomRoom = Random.Range(0, normalRooms.Length); //Escolhe a sala a ser gerada
+                    map[x, y] = normalRooms[randomRoom];
+                }
             }
 
             //Instancia todas as salas na sua posição respectiva
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < maxSize; i++)
             {
-                for(int j = 0; j < 25; j++)
+                for(int j = 0; j < maxSize; j++)
                 {
                     if (map[i, j] != null)
                     {
@@ -91,9 +99,11 @@ public class LevelGenerator : MonoBehaviour {
                 }
             }
 
-            currentRoom = map[12, 12]; //Atribui a sala actual
-            player.transform.position = new Vector3(12 * map[12, 12].room.GetComponent<Renderer>().bounds.size.x, 1, 12 * map[12, 12].room.GetComponent<Renderer>().bounds.size.z);
-            cam.transform.position = new Vector3(12 * map[12, 12].room.GetComponent<Renderer>().bounds.size.x, cam.transform.position.y, 12 * map[12, 12].room.GetComponent<Renderer>().bounds.size.z - 12);
+            currentRoom = map[maxSize/2, maxSize/2]; //Atribui a sala actual
+
+            //Posiciona a camara e o jogador na primeira sala
+            player.transform.position = new Vector3(maxSize/2 * map[maxSize/2, maxSize/2].room.GetComponent<Renderer>().bounds.size.x, 1, maxSize/2 * map[maxSize/2, maxSize/2].room.GetComponent<Renderer>().bounds.size.z);
+            cam.transform.position = new Vector3(maxSize/2 * map[maxSize/2, maxSize/2].room.GetComponent<Renderer>().bounds.size.x, cam.transform.position.y, maxSize/2 * map[maxSize/2, maxSize/2].room.GetComponent<Renderer>().bounds.size.z - 12);
 
             NavMeshBuilder.BuildNavMesh();
 
@@ -110,25 +120,30 @@ public class LevelGenerator : MonoBehaviour {
         //Verificar se sala já foi derrotada e abrir portas
         if (currentRoom.clear)
         {
+            Debug.Log(GetCurrentRoomCoordinates());
+
             //Abre porta da esquerda
             if ((int)GetCurrentRoomCoordinates().x - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y] != null)
             {
                 map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].OpenDoor(1);
                 currentRoom.OpenDoor(0);
+                Debug.Log("Abriu a esquerda");
             }
 
             //Abre porta da direita
-            if ((int)GetCurrentRoomCoordinates().x + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y] != null)
+            if ((int)GetCurrentRoomCoordinates().x + 1 < maxSize && map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y] != null)
             {
                 map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].OpenDoor(0);
                 currentRoom.OpenDoor(1);
+                Debug.Log("Abriu a direita");
             }
 
             //Abre porta de cima
-            if ((int)GetCurrentRoomCoordinates().y + 1 < 10 && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1] != null)
+            if ((int)GetCurrentRoomCoordinates().y + 1 < maxSize && map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1] != null)
             {
                 map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].OpenDoor(3);
                 currentRoom.OpenDoor(2);
+                Debug.Log("Abriu a de cima");
             }
 
             //Abre porta de baixo
@@ -136,7 +151,10 @@ public class LevelGenerator : MonoBehaviour {
             {
                 map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].OpenDoor(2);
                 currentRoom.OpenDoor(3);
+                Debug.Log("Abriu a de baixo");
             }
+
+            if (currentRoom.boss) ResetMap();
         }
         else if (newRoom)
         {
@@ -160,9 +178,9 @@ public class LevelGenerator : MonoBehaviour {
         //Verificar em que sala está o jogador
         if (player != null)
         {
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < maxSize; i++)
             {
-                for (int j = 0; j < 25; j++)
+                for (int j = 0; j < maxSize; j++)
                 {
                     if (map[i, j] != null
                         && player.transform.position.x < map[i, j].transform.position.x + map[i, j].room.GetComponent<Renderer>().bounds.size.x / 2
@@ -183,13 +201,33 @@ public class LevelGenerator : MonoBehaviour {
 
     private Vector2 GetCurrentRoomCoordinates()
     {
-        for (int i = 0; i < 25; i++ )
+        for (int i = 0; i < maxSize; i++ )
         {
-            for (int j = 0; j < 25; j++)
+            for (int j = 0; j < maxSize; j++)
             {
                 if (map[i,j] != null && currentRoom == map[i, j]) return new Vector2(i, j);
             }
         }
         return Vector2.zero;
+    }
+
+    private void ResetMap()
+    {
+        //Delete all rooms
+        for (int i = 0; i < GameObject.FindObjectsOfType<Room>().Length; i++)
+        {
+            GameObject.Destroy(GameObject.FindObjectsOfType<Room>()[i]);
+        }
+
+        //Reset map array
+        for (int i = 0; i < maxSize; i++)
+        {
+            for (int j = 0; j < maxSize; j++)
+            {
+                map[i, j] = null;
+            }
+        }
+
+        newMap = true;
     }
 }
