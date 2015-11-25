@@ -17,7 +17,7 @@ public class LevelGenerator : MonoBehaviour {
 
     private GameObject player, cam;
 
-    float camSpeed = 30f;
+    float camSpeed = 50f;
 
 	// Use this for initialization
 	void Start () 
@@ -120,14 +120,11 @@ public class LevelGenerator : MonoBehaviour {
         //Verificar se sala já foi derrotada e abrir portas
         if (currentRoom.clear)
         {
-            Debug.Log(GetCurrentRoomCoordinates());
-
             //Abre porta da esquerda
             if ((int)GetCurrentRoomCoordinates().x - 1 >= 0 && map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y] != null)
             {
                 map[(int)GetCurrentRoomCoordinates().x - 1, (int)GetCurrentRoomCoordinates().y].OpenDoor(1);
                 currentRoom.OpenDoor(0);
-                Debug.Log("Abriu a esquerda");
             }
 
             //Abre porta da direita
@@ -135,7 +132,6 @@ public class LevelGenerator : MonoBehaviour {
             {
                 map[(int)GetCurrentRoomCoordinates().x + 1, (int)GetCurrentRoomCoordinates().y].OpenDoor(0);
                 currentRoom.OpenDoor(1);
-                Debug.Log("Abriu a direita");
             }
 
             //Abre porta de cima
@@ -143,7 +139,6 @@ public class LevelGenerator : MonoBehaviour {
             {
                 map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y + 1].OpenDoor(3);
                 currentRoom.OpenDoor(2);
-                Debug.Log("Abriu a de cima");
             }
 
             //Abre porta de baixo
@@ -151,10 +146,14 @@ public class LevelGenerator : MonoBehaviour {
             {
                 map[(int)GetCurrentRoomCoordinates().x, (int)GetCurrentRoomCoordinates().y - 1].OpenDoor(2);
                 currentRoom.OpenDoor(3);
-                Debug.Log("Abriu a de baixo");
             }
 
-            if (currentRoom.boss) ResetMap();
+            if (currentRoom.boss)
+            {
+                ResetMap(); //Reinicia o mapa
+                //level++; //Próximo nível
+                player.GetComponent<Player>().health = player.GetComponent<Player>().startingHealth; //HP do jogador fica a 100%
+            }
         }
         else if (newRoom)
         {
@@ -213,21 +212,23 @@ public class LevelGenerator : MonoBehaviour {
 
     private void ResetMap()
     {
-        //Delete all rooms
-        for (int i = 0; i < GameObject.FindObjectsOfType<Room>().Length; i++)
-        {
-            GameObject.Destroy(GameObject.FindObjectsOfType<Room>()[i]);
-        }
-
         //Reset map array
         for (int i = 0; i < maxSize; i++)
         {
             for (int j = 0; j < maxSize; j++)
             {
-                map[i, j] = null;
+                if (map[i, j] != null)
+                {
+                    GameObject obj = GameObject.Find(map[i, j].gameObject.name);
+                    foreach (Transform child in obj.transform)
+                    {
+                        GameObject.Destroy(child.gameObject);
+                    }
+                    Destroy(obj);
+                    map[i, j] = null;
+                }
             }
         }
-
         newMap = true;
     }
 }

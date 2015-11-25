@@ -38,6 +38,7 @@ public class Enemy : LivingEntity {
     //Boss 1
     Vector3 movement;
     int direction;
+    bool phase2, phase3;
 
     // To get space after reaching player
     float mycollisionRadious;
@@ -65,8 +66,9 @@ public class Enemy : LivingEntity {
 
         if (type == Type.Boss1)
         {
-            int direction = Random.Range(0, 2);
-            if (direction == 0) direction = -1;
+            direction = Random.Range(0, 2);
+            if (direction == 0)
+                direction = -1;
 
             movement = Vector3.right * direction;
         }
@@ -134,8 +136,24 @@ public class Enemy : LivingEntity {
 
             if (Physics.Raycast(ray, out hit, 3f, collisionMask, QueryTriggerInteraction.Collide))
             {
-                movement = Quaternion.Euler(0, 90f, 0) * movement;
+                movement = Quaternion.Euler(0, direction * 90f, 0) * movement;
             }
+
+            //Phases
+            if (health < startingHealth * 0.66f && !phase2)
+            {
+                pathFinder.speed = 20f;
+                direction *= -1;
+                phase2 = true;
+            }
+            if (health < startingHealth * 0.33f)
+            {
+                pathFinder.speed = 25f;
+                direction *= -1;
+                phase3 = true;
+            }
+            
+
             #endregion
         }
         //General

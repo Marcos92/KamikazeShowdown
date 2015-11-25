@@ -27,7 +27,8 @@ public class Spawner : MonoBehaviour {
             enemiesRemainingToSpawn--;
             nextSpawnTime = Time.time + currentWave.timebetweenSpawns;
 
-            Enemy spawnedEnemy = Instantiate(enemy, transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)), Quaternion.identity) as Enemy;
+            Enemy spawnedEnemy = Instantiate(enemy, transform.position, Quaternion.identity) as Enemy;
+            spawnedEnemy.transform.parent = gameObject.transform;
             spawnedEnemy.onDeath += OnEnemyDeath;
         }
     }

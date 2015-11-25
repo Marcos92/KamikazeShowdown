@@ -23,24 +23,28 @@ public class Room : MonoBehaviour
         {
             spawners[0] = Instantiate(topSpawner, room.transform.position + new Vector3(0, 0, room.GetComponent<Renderer>().bounds.size.z / 2 - 2), Quaternion.identity) as Spawner;
             spawners[0].gameObject.SetActive(false);
+            spawners[0].transform.parent = gameObject.transform;
         }
 
         if (bottomSpawner != null)
         {
             spawners[1] = Instantiate(bottomSpawner, room.transform.position + new Vector3(0, 0, -room.GetComponent<Renderer>().bounds.size.z / 2 + 2), Quaternion.identity) as Spawner;
             spawners[1].gameObject.SetActive(false);
+            spawners[1].transform.parent = gameObject.transform;
         }
 
         if (leftSpawner != null)
         {
             spawners[2] = Instantiate(leftSpawner, room.transform.position + new Vector3(-room.GetComponent<Renderer>().bounds.size.z / 2 + 2, 0, 0), Quaternion.identity) as Spawner;
             spawners[2].gameObject.SetActive(false);
+            spawners[2].transform.parent = gameObject.transform;
         }
 
         if (rightSpawner != null)
         {
             spawners[3] = Instantiate(rightSpawner, room.transform.position + new Vector3(room.GetComponent<Renderer>().bounds.size.z / 2 - 2, 0, 0), Quaternion.identity) as Spawner;
             spawners[3].gameObject.SetActive(false);
+            spawners[3].transform.parent = gameObject.transform;
         }
 
         doors[0] = Instantiate(door, room.transform.position + new Vector3(-32, 4, 0), Quaternion.identity) as GameObject; //Porta da esquerda
@@ -49,6 +53,11 @@ public class Room : MonoBehaviour
         doors[2].transform.Rotate(0, 90, 0);
         doors[3] = Instantiate(door, room.transform.position + new Vector3(0, 4, -18), Quaternion.identity) as GameObject; //Porta de baixo
         doors[3].transform.Rotate(0, 90, 0);
+
+        doors[0].transform.parent = gameObject.transform;
+        doors[1].transform.parent = gameObject.transform;
+        doors[2].transform.parent = gameObject.transform;
+        doors[3].transform.parent = gameObject.transform;
     }
 	
 	// Update is called once per frame
