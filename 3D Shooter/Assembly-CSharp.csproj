@@ -45,6 +45,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Buttons.cs" />
      <Compile Include="Assets\Scripts\CameraLookAt.cs" />
      <Compile Include="Assets\Scripts\ConveyorBelt.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />

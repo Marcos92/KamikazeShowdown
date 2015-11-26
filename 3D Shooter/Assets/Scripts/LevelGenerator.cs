@@ -34,7 +34,7 @@ public class LevelGenerator : MonoBehaviour {
     {
 	    if(newMap)
         {
-            nRooms = level * 10;
+            nRooms = level * 5;
 
             int x = maxSize / 2, y = maxSize / 2;
             map[x, y] = normalRooms[0]; //Primeira sala
@@ -94,6 +94,9 @@ public class LevelGenerator : MonoBehaviour {
                     if (map[i, j] != null)
                     {
                         Room r = Instantiate(map[i, j], new Vector3(i * map[i, j].room.GetComponent<Renderer>().bounds.size.x, -1, j * map[i, j].room.GetComponent<Renderer>().bounds.size.z), Quaternion.identity) as Room;
+
+                        SwitchAllFlameTraps(false, r);
+
                         map[i, j] = r;
                     }
                 }
@@ -150,9 +153,11 @@ public class LevelGenerator : MonoBehaviour {
 
             if (currentRoom.boss)
             {
-                ResetMap(); //Reinicia o mapa
+                //ResetMap(); //Reinicia o mapa
                 //level++; //Próximo nível
-                player.GetComponent<Player>().health = player.GetComponent<Player>().startingHealth; //HP do jogador fica a 100%
+                //player.GetComponent<Player>().health = player.GetComponent<Player>().startingHealth; //HP do jogador fica a 100%
+
+                Application.LoadLevel("Menu");
             }
         }
         else if (newRoom)
@@ -163,13 +168,16 @@ public class LevelGenerator : MonoBehaviour {
             currentRoom.CloseDoor(2);
             currentRoom.CloseDoor(3);
 
+            //Activa todos os flame traps
+            SwitchAllFlameTraps(true, currentRoom);
+
             if (currentRoom.AllDoorsClosed())
             {
                 //Activa todos os spawners
-                if (currentRoom.spawners[0] != null) currentRoom.spawners[0].gameObject.SetActive(true);
-                if (currentRoom.spawners[1] != null) currentRoom.spawners[1].gameObject.SetActive(true);
-                if (currentRoom.spawners[2] != null) currentRoom.spawners[2].gameObject.SetActive(true);
-                if (currentRoom.spawners[3] != null) currentRoom.spawners[3].gameObject.SetActive(true);
+                foreach (Transform c in currentRoom.transform)
+                {
+                    if (c.GetComponents<Spawner>().Length > 0) c.gameObject.SetActive(true);
+                }
                 newRoom = false;
             }
         }
@@ -189,6 +197,7 @@ public class LevelGenerator : MonoBehaviour {
                     {
                         if (currentRoom != map[i, j])
                         {
+                            SwitchAllFlameTraps(false, currentRoom);
                             newRoom = true;
                             currentRoom = map[i, j];
                         }
@@ -212,6 +221,15 @@ public class LevelGenerator : MonoBehaviour {
 
     private void ResetMap()
     {
+        foreach (Room r in FindObjectsOfType<Room>())
+        {
+            foreach (Transform c in r.transform)
+            {
+                GameObject.Destroy(c.gameObject);
+            }
+            GameObject.Destroy(r.gameObject);
+        }
+
         //Reset map array
         for (int i = 0; i < maxSize; i++)
         {
@@ -219,16 +237,18 @@ public class LevelGenerator : MonoBehaviour {
             {
                 if (map[i, j] != null)
                 {
-                    GameObject obj = GameObject.Find(map[i, j].gameObject.name);
-                    foreach (Transform child in obj.transform)
-                    {
-                        GameObject.Destroy(child.gameObject);
-                    }
-                    Destroy(obj);
                     map[i, j] = null;
                 }
             }
         }
         newMap = true;
+    }
+
+    private void SwitchAllFlameTraps(bool b, Room r)
+    {
+        foreach (Transform c in r.transform)
+        {
+            if (c.GetComponents<FlameTrap>().Length > 0) c.gameObject.SetActive(b);
+        }
     }
 }

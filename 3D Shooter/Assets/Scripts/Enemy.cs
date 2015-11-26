@@ -134,7 +134,7 @@ public class Enemy : LivingEntity {
             Ray ray = new Ray(transform.position, movement);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 3f, collisionMask, QueryTriggerInteraction.Collide))
+            if (Physics.Raycast(ray, out hit, 5f, collisionMask, QueryTriggerInteraction.Collide))
             {
                 movement = Quaternion.Euler(0, direction * 90f, 0) * movement;
             }
@@ -146,7 +146,7 @@ public class Enemy : LivingEntity {
                 direction *= -1;
                 phase2 = true;
             }
-            if (health < startingHealth * 0.33f)
+            if (health < startingHealth * 0.33f && !phase3)
             {
                 pathFinder.speed = 25f;
                 direction *= -1;
@@ -181,7 +181,7 @@ public class Enemy : LivingEntity {
         currentState = State.Attacking;
         pathFinder.enabled = false;
 
-        if (type == Type.Melee)
+        if (type == Type.Melee && anim != null)
             anim.Play("Idle"); // Idle = attack
 
         Vector3 originalPosition = transform.position;
@@ -258,7 +258,6 @@ public class Enemy : LivingEntity {
                 if (!dead) pathFinder.SetDestination(targetPosition);
 
                 Ray ray = new Ray(transform.position, transform.forward);
-                //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 4, transform.position.z), transform.forward, Color.cyan);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, 6f, collisionMask, QueryTriggerInteraction.Collide))
