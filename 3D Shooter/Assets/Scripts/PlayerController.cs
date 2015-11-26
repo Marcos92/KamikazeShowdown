@@ -13,11 +13,7 @@ public class PlayerController : MonoBehaviour {
 
     public void Move(Vector3 _velocity)
     {
-        if (_velocity.magnitude > 1)
-        {
-            _velocity.Normalize();
-        }
-        velocity = _velocity;
+         velocity = _velocity;
     }
 
     public void LookAt(Vector3 lookAtPoint)
