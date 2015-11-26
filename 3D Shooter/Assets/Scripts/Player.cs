@@ -6,6 +6,7 @@ using System.Collections;
 public class Player : LivingEntity {
 
     public float moveSpeed = 5;
+    Vector3 moveVelocity;
 
     Camera viewCamera;
     PlayerController controller;
@@ -25,6 +26,14 @@ public class Player : LivingEntity {
 
     float currentHealth;
 
+    // Animation stuff
+    Animator anim;
+    Transform cam;
+    Vector3 camForward;
+    Vector3 move;
+    float forwardAmount;
+    float turnAmount;
+
 	protected override void Start ()
     {
         base.Start();
@@ -34,19 +43,39 @@ public class Player : LivingEntity {
         combo = 1;
         canDodge = true;
         dodging = false;
+
+        anim = GetComponentInChildren<Animator>();
+        cam = Camera.main.transform;
 	}
 	
 	void Update ()
     {
         // Movement Input
 	    Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        Vector3 moveVelocity = moveInput.normalized * moveSpeed;
-        if (!dodging) controller.Move(moveVelocity);
+
+        camForward = Vector3.Scale(cam.up, new Vector3(1, 0, 1)).normalized;
+        move = moveInput.y * camForward + moveInput.x * cam.right;
+
+        if (move.magnitude > 1)
+        {
+            move.Normalize();
+        }
+
+        moveVelocity = moveInput.normalized * moveSpeed;
+
+        if (!dodging)
+        {
+            controller.Move(moveVelocity);
+
+            ConvertMoveInput();
+            UpdateAnimator();
+        }
         else if (dodging)
         {
             i++;
             controller.Move(moveInput.normalized * dodgeSpeed);
         }
+
         // Look input
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
@@ -57,6 +86,8 @@ public class Player : LivingEntity {
             Vector3 point = ray.GetPoint(rayDistance);
             controller.LookAt(point);
         }
+
+
 
         // Weapon input
         if (!dodging && Input.GetMouseButton(0))
@@ -81,9 +112,6 @@ public class Player : LivingEntity {
             canDodge = true;
         }
 
-        //if (dodging) skinMaterial.color = Color.green;
-        //else skinMaterial.color = originalColor;
-
         //Ammo
         if (!gunController.equippedGun.infinite && gunController.equippedGun.ammo <= 0)
             gunController.EquipGun(gunController.startingGun);
@@ -92,6 +120,18 @@ public class Player : LivingEntity {
         if(health < currentHealth) combo = 1;
 
         currentHealth = health;
+    }
+
+    void ConvertMoveInput()
+    {
+        Vector3 localMove = transform.InverseTransformDirection(moveVelocity);
+        turnAmount = localMove.x;
+        forwardAmount = localMove.z;
+    }
+    void UpdateAnimator()
+    {
+        anim.SetFloat("Forward", forwardAmount, 0.1f, Time.deltaTime);
+        anim.SetFloat("Turn", turnAmount, 0.1f, Time.deltaTime);
     }
 
     void OnTriggerEnter(Collider c)

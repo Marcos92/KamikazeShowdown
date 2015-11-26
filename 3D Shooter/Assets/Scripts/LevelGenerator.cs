@@ -34,7 +34,7 @@ public class LevelGenerator : MonoBehaviour {
     {
 	    if(newMap)
         {
-            nRooms = level * 1;
+            nRooms = level * 10;
 
             int x = maxSize / 2, y = maxSize / 2;
             map[x, y] = normalRooms[0]; //Primeira sala
