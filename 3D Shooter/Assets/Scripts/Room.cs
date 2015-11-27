@@ -76,13 +76,13 @@ public class Room : MonoBehaviour
     public void OpenDoor(int d)
     {
         if (doors[d].transform.position.y < 8) 
-            doors[d].transform.position += Vector3.up * 2.5f * Time.deltaTime;
+            doors[d].transform.position += Vector3.up * 5f * Time.deltaTime;
     }
 
     public void CloseDoor(int d)
     {
         if (doors[d].transform.position.y > 4)
-            doors[d].transform.position -= Vector3.up * 2.5f * Time.deltaTime;
+            doors[d].transform.position -= Vector3.up * 5f * Time.deltaTime;
     }
 
     public bool AllDoorsClosed()

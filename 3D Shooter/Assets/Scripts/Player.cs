@@ -46,6 +46,8 @@ public class Player : LivingEntity {
 
         anim = GetComponentInChildren<Animator>();
         cam = Camera.main.transform;
+
+        onDeath += GameOver;
 	}
 	
 	void Update ()
@@ -93,6 +95,10 @@ public class Player : LivingEntity {
         if (!dodging && Input.GetMouseButton(0))
         {
             gunController.Shoot();
+        }
+        else
+        {
+            gunController.equippedGun.FadeOut();
         }
 
         //Dodge
@@ -150,5 +156,10 @@ public class Player : LivingEntity {
             dodging = false;
             canDodge = false;
         }
+    }
+
+    void GameOver()
+    {
+        Application.LoadLevel("Menu");
     }
 }

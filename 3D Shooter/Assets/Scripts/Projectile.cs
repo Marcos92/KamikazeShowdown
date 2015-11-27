@@ -13,9 +13,12 @@ public class Projectile : MonoBehaviour {
 
     public Color trailColor;
 
+    private AudioSource audioSource;
+
     void Start()
     {
         Destroy(gameObject, lifeTime);
+        audioSource = GetComponent<AudioSource>();
 
         Collider[] initialCollisions = Physics.OverlapSphere(transform.position, .1f, collisionMask);
         if (initialCollisions.Length > 0)
@@ -49,6 +52,7 @@ public class Projectile : MonoBehaviour {
         {
             bounces--;
             OnHitObject(hit);
+            audioSource.Play();
             if(bounces > 0) transform.forward = Vector3.Reflect(transform.forward, hit.normal);
         }
     }

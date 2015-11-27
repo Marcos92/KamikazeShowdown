@@ -262,7 +262,8 @@ public class Enemy : LivingEntity {
 
                 if (Physics.Raycast(ray, out hit, 6f, collisionMask, QueryTriggerInteraction.Collide))
                 {
-                    transform.forward = Vector3.Reflect(transform.forward, hit.normal);
+                    transform.forward = new Vector3(Vector3.Reflect(transform.forward, hit.normal).x, 0, Vector3.Reflect(transform.forward, hit.normal).z);
+
                 }
 
                 yield return new WaitForSeconds(refreshRate);

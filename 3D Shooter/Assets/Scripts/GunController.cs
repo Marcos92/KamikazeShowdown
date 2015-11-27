@@ -27,6 +27,6 @@ public class GunController : MonoBehaviour {
     public void Shoot()
     {
         if (equippedGun != null)
-            equippedGun.Shoot();
+            equippedGun.Shoot();    
     }
 }
