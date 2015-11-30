@@ -9,24 +9,25 @@ public class Gun : MonoBehaviour {
     public int muzzleVelocity = 35;
     public bool spread, flame, shotgun, machinegun, infinite;
     public AudioSource audioSource;
+
     [Range(0,1)]
     public float audioFade = .9f; // damping coefficient for the audio volume. .98 is a slow fade, .9 is a fast fade
 
     public int ammo;
 
-    float nextShootTime;
+    public float nextShootTime;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
     }
+
     public void Shoot()
     {
         audioSource.volume = 1;
         if (Time.time > nextShootTime)
         {
             nextShootTime = Time.time + msBetweenShots / 1000;
-            ammo--;
 
             if (!flame)
                 audioSource.Play();
@@ -34,7 +35,8 @@ public class Gun : MonoBehaviour {
             {
                 audioSource.Play();
             }
-                
+
+            ammo--;
 
             if (flame)
             {

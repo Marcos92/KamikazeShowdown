@@ -34,7 +34,11 @@ public class Player : LivingEntity {
     float forwardAmount;
     float turnAmount;
 
-	protected override void Start ()
+    //São
+    public AudioSource audioSource;
+    float weaponChangeDelay;
+
+    protected override void Start ()
     {
         base.Start();
         controller = GetComponent<PlayerController>();
@@ -44,6 +48,7 @@ public class Player : LivingEntity {
         canDodge = true;
         dodging = false;
 
+        audioSource = GetComponent<AudioSource>();
         anim = GetComponentInChildren<Animator>();
         cam = Camera.main.transform;
 
@@ -89,12 +94,11 @@ public class Player : LivingEntity {
             controller.LookAt(point);
         }
 
-
-
         // Weapon input
         if (!dodging && Input.GetMouseButton(0))
         {
-            gunController.Shoot();
+            if (gunController.equippedGun.ammo > 0) gunController.Shoot();
+            else if (gunController.equippedGun.infinite) gunController.Shoot();
         }
         else
         {
@@ -107,6 +111,7 @@ public class Player : LivingEntity {
             dodging = true;
             canDodge = false;
             nextDodgeTime = Time.time + msBetweenDodges / 1000f;
+            audioSource.Play();
         }
         else if (dodging && i > 5)
         {
@@ -120,7 +125,16 @@ public class Player : LivingEntity {
 
         //Ammo
         if (!gunController.equippedGun.infinite && gunController.equippedGun.ammo <= 0)
-            gunController.EquipGun(gunController.startingGun);
+        {
+            weaponChangeDelay += Time.deltaTime;
+
+            if(weaponChangeDelay >= 1f)
+            {
+                gunController.EquipGun(gunController.startingGun);
+                gunController.equippedGun.nextShootTime = Time.time + gunController.equippedGun.msBetweenShots / 1000;
+                weaponChangeDelay = 0f;
+            }
+        }
 
         //Combo 
         if(health < currentHealth) combo = 1;
