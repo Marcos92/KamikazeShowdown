@@ -160,7 +160,7 @@ public class Enemy : LivingEntity {
         else
         {
             #region
-            if (hasTarget)
+            if (hasTarget && type != Type.Roaming)
             {
                 if (Time.time > nextAttackTime)
                 {
@@ -260,7 +260,7 @@ public class Enemy : LivingEntity {
                 Ray ray = new Ray(transform.position, transform.forward);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 6f, collisionMask, QueryTriggerInteraction.Collide))
+                if (Physics.Raycast(ray, out hit, 10f, collisionMask, QueryTriggerInteraction.Collide))
                 {
                     transform.forward = new Vector3(Vector3.Reflect(transform.forward, hit.normal).x, 0, Vector3.Reflect(transform.forward, hit.normal).z);
 

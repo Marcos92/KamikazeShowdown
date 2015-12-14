@@ -7,6 +7,11 @@ public class Projectile : MonoBehaviour {
     float speed;
     public float damage = 1;
     public bool bouncing;
+    public bool explosive;
+    public float explosionRadius;
+    public bool missile;
+    float timeBetweenSearches = 1.5f, nextSearchTime;
+    Vector3 targetPosition;
 
     public float lifeTime = 2;
     float skinWidth = 0.1f;
@@ -38,6 +43,27 @@ public class Projectile : MonoBehaviour {
 	
 	void Update () 
 	{
+        if(missile)
+        {
+            if(Time.time > nextSearchTime)
+            {
+                nextSearchTime = Time.time + timeBetweenSearches;
+
+                Transform closestTarget = null;
+
+                foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                {
+                    if (closestTarget == null) closestTarget = enemy.transform;
+                    else if (Vector3.Distance(closestTarget.position, transform.position) > Vector3.Distance(enemy.transform.position, transform.position)) closestTarget = enemy.transform;
+                }
+
+                targetPosition = closestTarget.position;
+            }
+
+            Vector3 dirToTarget = (targetPosition - transform.position).normalized;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget), Time.deltaTime * 2f);
+        }
+
         float moveDistance = speed * Time.deltaTime;
         CheckCollisions(moveDistance);
         transform.Translate(Vector3.forward * moveDistance);
@@ -65,6 +91,7 @@ public class Projectile : MonoBehaviour {
         {
             damageableObject.TakeHit(damage, hit);
         }
+        if (explosive) Explosion();
         if(!bouncing) GameObject.Destroy(gameObject);
     }
 
@@ -75,6 +102,18 @@ public class Projectile : MonoBehaviour {
         {
             damageableObject.TakeDamage(damage);
         }
+        if (explosive) Explosion();
         if(!bouncing) GameObject.Destroy(gameObject);
+    }
+
+    void Explosion()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
+
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].gameObject.GetComponent<LivingEntity>() != null) 
+                hitColliders[i].gameObject.GetComponent<LivingEntity>().TakeDamage(damage / 2);
+        }
     }
 }
