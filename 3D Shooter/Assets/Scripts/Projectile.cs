@@ -10,8 +10,9 @@ public class Projectile : MonoBehaviour {
     public bool explosive;
     public float explosionRadius;
     public bool missile;
-    float timeBetweenSearches = 1.5f, nextSearchTime;
+    float timeBetweenSearches = 0.25f, nextSearchTime;
     Vector3 targetPosition;
+    Transform closestTarget;
 
     public float lifeTime = 2;
     float skinWidth = 0.1f;
@@ -34,6 +35,8 @@ public class Projectile : MonoBehaviour {
         {
             GetComponent<TrailRenderer>().material.SetColor("_TintColor", trailColor);
         }
+
+        if (missile) nextSearchTime = Time.time + timeBetweenSearches;
     }
 
 	public void SetSpeed(float newSpeed)
@@ -49,7 +52,7 @@ public class Projectile : MonoBehaviour {
             {
                 nextSearchTime = Time.time + timeBetweenSearches;
 
-                Transform closestTarget = null;
+                closestTarget = null;
 
                 foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
                 {
@@ -57,11 +60,15 @@ public class Projectile : MonoBehaviour {
                     else if (Vector3.Distance(closestTarget.position, transform.position) > Vector3.Distance(enemy.transform.position, transform.position)) closestTarget = enemy.transform;
                 }
 
-                targetPosition = closestTarget.position;
+                if (closestTarget != null) targetPosition = closestTarget.position;
             }
 
-            Vector3 dirToTarget = (targetPosition - transform.position).normalized;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget), Time.deltaTime * 2f);
+            if (closestTarget != null)
+            {
+                Vector3 dirToTarget = (targetPosition - transform.position).normalized;
+                Quaternion rotation = Quaternion.LookRotation(dirToTarget);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.25f);
+            }
         }
 
         float moveDistance = speed * Time.deltaTime;
