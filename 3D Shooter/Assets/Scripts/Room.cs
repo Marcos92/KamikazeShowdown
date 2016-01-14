@@ -35,14 +35,14 @@ public class Room : MonoBehaviour
 
         if (leftSpawner != null)
         {
-            spawners[2] = Instantiate(leftSpawner, room.transform.position + new Vector3(-room.GetComponent<Renderer>().bounds.size.z / 2 + 2, 0, 0), Quaternion.identity) as Spawner;
+            spawners[2] = Instantiate(leftSpawner, room.transform.position + new Vector3(-room.GetComponent<Renderer>().bounds.size.z / 2 - 10, 0, 0), Quaternion.identity) as Spawner;
             spawners[2].gameObject.SetActive(false);
             spawners[2].transform.parent = gameObject.transform;
         }
 
         if (rightSpawner != null)
         {
-            spawners[3] = Instantiate(rightSpawner, room.transform.position + new Vector3(room.GetComponent<Renderer>().bounds.size.z / 2 - 2, 0, 0), Quaternion.identity) as Spawner;
+            spawners[3] = Instantiate(rightSpawner, room.transform.position + new Vector3(room.GetComponent<Renderer>().bounds.size.z / 2 + 10, 0, 0), Quaternion.identity) as Spawner;
             spawners[3].gameObject.SetActive(false);
             spawners[3].transform.parent = gameObject.transform;
         }
