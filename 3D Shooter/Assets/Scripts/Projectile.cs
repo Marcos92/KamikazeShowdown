@@ -20,6 +20,7 @@ public class Projectile : MonoBehaviour {
     public Color trailColor;
 
     private AudioSource audioSource;
+    public AudioClip explosionSound;
 
     void Start()
     {
@@ -98,7 +99,6 @@ public class Projectile : MonoBehaviour {
         {
             damageableObject.TakeHit(damage, hit);
         }
-        if (explosive) Explosion();
         if(!bouncing) GameObject.Destroy(gameObject);
     }
 
@@ -109,7 +109,6 @@ public class Projectile : MonoBehaviour {
         {
             damageableObject.TakeDamage(damage);
         }
-        if (explosive) Explosion();
         if(!bouncing) GameObject.Destroy(gameObject);
     }
 

@@ -5,7 +5,7 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour {
 
-    public GameObject health, combo, score, ammo, player, bossHealth;
+    public GameObject health, combo, score, ammo, player, bossHealth, weapon;
     Enemy boss;
 
 	// Use this for initialization
@@ -28,6 +28,8 @@ public class UIManager : MonoBehaviour {
 
             if (player.GetComponent<Player>().gunController.equippedGun.infinite) ammo.GetComponent<Text>().text = "";
             else ammo.GetComponent<Text>().text = player.GetComponent<Player>().gunController.equippedGun.ammo.ToString() + " BULLETS";
+
+            weapon.GetComponent<Text>().text = player.GetComponent<Player>().gunController.equippedGun.weaponName;
         }
         if (gameObject.GetComponent<LevelGenerator>().currentRoom.boss)
         { 

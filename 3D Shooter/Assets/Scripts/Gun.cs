@@ -9,6 +9,7 @@ public class Gun : MonoBehaviour {
     public int muzzleVelocity = 35;
     public bool spread, flame, shotgun, machinegun, infinite;
     public AudioSource audioSource;
+    public string weaponName;
 
     [Range(0,1)]
     public float audioFade = .9f; // damping coefficient for the audio volume. .98 is a slow fade, .9 is a fast fade

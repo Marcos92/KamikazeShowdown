@@ -34,8 +34,10 @@ public class Player : LivingEntity {
     float forwardAmount;
     float turnAmount;
 
-    //São
-    public AudioSource audioSource;
+    //Sound
+    AudioSource audioSource;
+    public AudioClip dodgeSound, pickUpSound;
+
     float weaponChangeDelay;
 
     protected override void Start ()
@@ -49,6 +51,7 @@ public class Player : LivingEntity {
         dodging = false;
 
         audioSource = GetComponent<AudioSource>();
+
         anim = GetComponentInChildren<Animator>();
         cam = Camera.main.transform;
 
@@ -111,6 +114,7 @@ public class Player : LivingEntity {
             dodging = true;
             canDodge = false;
             nextDodgeTime = Time.time + msBetweenDodges / 1000f;
+            audioSource.clip = dodgeSound;
             audioSource.Play();
         }
         else if (dodging && i > 5)
@@ -160,6 +164,8 @@ public class Player : LivingEntity {
         {
             gunController.EquipGun(c.gameObject.GetComponent<PickUp>().gun);
             Destroy(c.gameObject);
+            audioSource.clip = pickUpSound;
+            audioSource.Play();
         }
     }
 

@@ -49,6 +49,10 @@ public class Enemy : LivingEntity {
     public int score;
 
     Animator anim;
+
+    //Sound
+    AudioSource audioSource;
+    public AudioClip shootSound;
     
 	protected override void Start () 
     {
@@ -91,6 +95,8 @@ public class Enemy : LivingEntity {
         }
 
         anim = GetComponentInChildren<Animator>();
+
+        audioSource = GetComponent<AudioSource>();
 	}
 
     void OntargetDeath()
@@ -217,6 +223,8 @@ public class Enemy : LivingEntity {
                     nextShootTime = Time.time + msBetweenShots / 1000;
                     Projectile newProjectile = Instantiate(projectile, transform.position, transform.rotation) as Projectile;
                     newProjectile.SetSpeed(projectileSpeed);
+                    audioSource.clip = shootSound;
+                    audioSource.Play();
                 }
                 percent += Time.deltaTime * 0.5f;
             }
