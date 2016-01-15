@@ -12,9 +12,13 @@ public class LivingEntity : MonoBehaviour, IDamageable {
     public GameObject hitParticle;
     public GameObject enemyDeathParticle;
 
+    public AudioClip death;
+    AudioSource audioSource;
+
     protected virtual void Start()
     {
         health = startingHealth;
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
 	public void TakeHit(float damage, RaycastHit hit)
@@ -31,6 +35,8 @@ public class LivingEntity : MonoBehaviour, IDamageable {
         {
             if (gameObject.tag == "Enemy")
             {
+                audioSource.clip = death;
+                audioSource.Play();
                 Destroy(Instantiate(enemyDeathParticle, gameObject.transform.position, Quaternion.FromToRotation(transform.position, transform.position - Camera.main.ScreenToViewportPoint(Input.mousePosition))), 2);
             }
             Die();

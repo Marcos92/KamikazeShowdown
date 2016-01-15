@@ -53,6 +53,8 @@ public class Enemy : LivingEntity {
     //Sound
     AudioSource audioSource;
     public AudioClip shootSound;
+    public AudioClip spawnSound;
+    
     
 	protected override void Start () 
     {
@@ -97,6 +99,8 @@ public class Enemy : LivingEntity {
         anim = GetComponentInChildren<Animator>();
 
         audioSource = GetComponent<AudioSource>();
+        audioSource.clip = spawnSound;
+        audioSource.Play();
 	}
 
     void OntargetDeath()
